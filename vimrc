@@ -1,7 +1,6 @@
 "==================================================================="
 " Map leader key
 let mapleader = ' '
-
 " Maps space to colon, time saver
 nnoremap ; :
 nnoremap <leader>r :source ~/.vimrc<CR>
@@ -186,7 +185,9 @@ set wrapscan
 " Custome Highlight Group
 hi MyTabSpace cterm=none ctermfg=darkgrey
 hi MyInsertContent cterm=none ctermfg=green ctermbg=darkgrey
+hi MyEchoMes cterm=none ctermfg=red ctermbg=none
 
+echohl MyEchoMes
 
 " 将tab字符和空格的颜色组为MyTabSpace,
 match MyTabSpace /\t\| /
@@ -204,13 +205,18 @@ autocmd InsertEnter *   let b:CursorLineBeforeIns = line(".") |
 autocmd InsertLeave *   let b:CursorLineAfterIns = line(".")  |
             \  let b:CursorColAfterIns = col(".")
 
-autocmd InsertLeave * echom  b:CursorLineBeforeIns b:CursorColBeforeIns b:CursorLineAfterIns b:CursorColAfterIns
-autocmd InsertLeave * echom 'Insert Text' |
+"autocmd InsertLeave * echom  b:CursorLineBeforeIns b:CursorColBeforeIns b:CursorLineAfterIns b:CursorColAfterIns
+autocmd InsertLeave * echom "INSERT: '" . @. . "'" |
             \ execute '2match MyInsertContent ' . '/\%' . b:CursorLineBeforeIns . 'l\%' . b:CursorColBeforeIns .
             \ 'c\(.\|\n\)*\%' . b:CursorLineAfterIns . 'l\%' . b:CursorColAfterIns .'c./'
 
 
 
+
+
+autocmd BufEnter * silent!  2match none |
+            \ silent! execute '2match MyInsertContent ' . '/\%' . b:CursorLineBeforeIns . 'l\%' . b:CursorColBeforeIns .
+            \ 'c\(.\|\n\)*\%' . b:CursorLineAfterIns . 'l\%' . b:CursorColAfterIns .'c./'
 
 "===========================Vim Plugins============================="
 
