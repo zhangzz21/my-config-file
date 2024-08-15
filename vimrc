@@ -1,12 +1,21 @@
 "==================================================================="
+"
 " Map leader key
 let mapleader = ' '
+
 " Maps space to colon, time saver
 nnoremap ; :
-nnoremap <leader>r :source ~/.vimrc<CR>
 
 " Set paste mode toggle key
 set pastetoggle=<insert>
+
+" Short key for vim config
+nnoremap <leader>r :source ~/.vimrc<CR>
+noremap <Leader>ev :tabnew $MYVIMRC<CR>
+
+
+" Short key to change display
+nnoremap <Leader>l :set list!<CR>
 
 
 " Key Remapping
@@ -15,6 +24,19 @@ nnoremap tn  :tabnew<CR>
 nnoremap tj  :tabnext<CR>
 nnoremap tk  :tabprev<CR>
 nnoremap tc  :tabclose<CR>
+
+vnoremap y ygv<Esc> " keep cursor position after visual yank
+"vnoremap <Leader>tc c<C-r>=system('~/.config/tcc', getreg('"'))[:-2]<CR>
+
+" Move  select lines up or down
+nnoremap <C-k> :m .-2<CR>==
+nnoremap <C-j> :m .+1<CR>==
+vnoremap <C-k> :m '<-2<CR>gv=gv
+vnoremap <C-j> :m '>+1<CR>gv=gv
+nnoremap <C-Up> :m .-2<CR>==
+nnoremap <C-Down> :m .+1<CR>==
+vnoremap <C-Up> :m '<-2<CR>gv=gv
+vnoremap <C-Down> :m '>+1<CR>gv=gv
 
 "Keep search pattern at the center of the screen."
 nnoremap <silent> n nzz
@@ -30,6 +52,7 @@ nnoremap <leader>q :q<Cr>
 nnoremap <leader>h :so $VIMRUNTIME/syntax/hitest.vim<CR>
 " 去除搜索高亮和插入高亮
 nnoremap <leader>n :noh<CR>:2match none<CR>
+nnoremap <leader>c cc<Esc>
 
 
 
@@ -96,6 +119,32 @@ set modeline
 
 " Set backspace key work normally
 set backspace=indent,eol,start
+
+"========================== Basic autocommands======================"
+
+" Auto-resize splits when Vim gets resized.
+autocmd VimResized * wincmd =
+
+" Update a buffer's contents on focus if it changed outside of Vim.
+au FocusGained,BufEnter,VimEnter,WinEnter,BufWinEnter * :checktime
+
+" Only show the cursor line in the active buffer.
+augroup CursorLine
+    au!
+    au VimEnter,WinEnter,BufWinEnter * setlocal cursorline |
+                \ setlocal cursorcolumn
+    au WinLeave * setlocal nocursorline | setlocal nocursorcolumn
+augroup END
+
+
+" Unset paste on InsertLeave.
+autocmd InsertLeave * silent! set nopaste
+
+" Make sure all types of requirements.txt files get syntax highlighting.
+autocmd BufNewFile,BufRead requirements*.txt set ft=python
+
+" Make sure .aliases, .bash_aliases and similar files get syntax highlighting.
+autocmd BufNewFile,BufRead .*aliases* set ft=sh
 
 
 "========================Set Vim Display============================"
