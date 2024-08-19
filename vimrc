@@ -51,7 +51,7 @@ nnoremap <leader>q :q<Cr>
 " 显示当前文件启用的高亮组设置
 nnoremap <leader>h :so $VIMRUNTIME/syntax/hitest.vim<CR>
 " 去除搜索高亮和插入高亮
-nnoremap <leader>n :noh<CR>:2match none<CR>
+nnoremap <leader>n :let @/=''<CR>:2match none<CR>
 nnoremap <leader>c cc<Esc>
 
 
