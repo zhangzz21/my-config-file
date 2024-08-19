@@ -284,10 +284,14 @@ call plug#begin()
 
 "List your plugins here
 "Plug 'ojroques/vim-oscyank', {'branch': 'main'} "set vim OSC52 clipboard support
+Plug 'zhangzz21/vim-oscyank', {'branch': 'main'} "set vim OSC52 clipboard support
 
 call plug#end()
 
-
+"==================================================================="
+nmap <leader>y <Plug>OSCYankOperator
+nmap <leader>yy <leader>y_
+vmap <leader>y <Plug>OSCYankVisual
 
 " some recommended plugins for c/c++: gtags,cscopetag
 "" vim 用 map 命令来映射快捷键,它前面可以加一些前缀来对应
@@ -302,7 +306,7 @@ call plug#end()
 "" 使用 ':tag' 和 '<C-]>'
 "set cscopetag
 "" 设置 cscopetag 后,由于gtags-cscopde默认没有启动,
-"" 还需要进行下面的设置.结合这两个设置, gtags 就可以
+"ojroques" 还需要进行下面的设置.结合这两个设置, gtags 就可以
 "" 使用Ctrl-]键来跳转到函数定义处.
 "let GtagsCscope_Auto_Load = 1
 "" 配置 GtagsCscope_Auto_Load = 1 后,在没有GTAGS文件
