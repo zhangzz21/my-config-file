@@ -12,6 +12,8 @@ set pastetoggle=<insert>
 " Short key for vim config
 nnoremap <leader>r :source ~/.vimrc<CR>
 noremap <Leader>ev :tabnew $MYVIMRC<CR>
+nnoremap q <esc>
+nnoremap Q q
 
 
 " Short key to change display
@@ -190,6 +192,20 @@ set laststatus=2
 set statusline+=%F%r\ [HEX=%B][%l,%v,%P]\ %{strftime(\"%H:%M\")}
 
 
+"function! s:statusline_expr()
+"  let mod = "%{&modified ? '[+] ' : !&modifiable ? '[x] ' : ''}"
+"  let ro  = "%{&readonly ? '[RO] ' : ''}"
+"  let ft  = "%{len(&filetype) ? '['.&filetype.'] ' : ''}"
+"  let fug = "%{exists('g:loaded_fugitive') ? fugitive#statusline() : ''}"
+"  let sep = ' %= '
+"  let pos = ' %-12(%l : %c%V%) '
+"  let pct = ' %P'
+"
+"  return '[%n] %f %<'.mod.ro.ft.fug.sep.pos.'%*'.pct
+"endfunction
+"
+"let &statusline = s:statusline_expr()
+
 "==================Vim Indent and Search Setting===================="
 " Set tab display 4 spaces
 set tabstop=4
@@ -232,14 +248,17 @@ set wrapscan
 "hi CursorLine   cterm=NONE ctermbg=grey ctermfg=green guibg=NONE guifg=NONE
 "
 " Custome Highlight Group
-hi MyTabSpace cterm=none ctermfg=darkgrey
+hi MyTabSpace cterm=none ctermfg=none ctermbg=none
 hi MyInsertContent cterm=none ctermfg=green ctermbg=darkgrey
 hi MyEchoMes cterm=none ctermfg=red ctermbg=none
 
+" set vim messege highlight
 echohl MyEchoMes
 
 " 将tab字符和空格的颜色组为MyTabSpace,
-match MyTabSpace /\t\| /
+"match MyTabSpace /\t\| /
+call matchadd('MyTabSpace', ' ', 1000)
+
 
 hi CursorColumn   cterm=none ctermbg=238 ctermfg=none
 hi CursorLine   cterm=none ctermbg=238 ctermfg=none
@@ -283,15 +302,59 @@ endif
 call plug#begin()
 
 "List your plugins here
-"Plug 'ojroques/vim-oscyank', {'branch': 'main'} "set vim OSC52 clipboard support
 Plug 'zhangzz21/vim-oscyank', {'branch': 'main'} "set vim OSC52 clipboard support
+"Plug 'rakr/vim-one'                             "vim one theme
+"Plug 'gruvbox-community/gruvbox'
+"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+" Better manage Vim sessions.
+Plug 'tpope/vim-obsession'
+"file zoom
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+" Pass focus events from tmux to Vim (useful for autoread and linting tools).
+Plug 'tmux-plugins/vim-tmux-focus-events'
+
+" Navigate and manipulate files in a tree view.
+Plug 'lambdalisue/fern.vim'
+Plug 'lambdalisue/fern-mapping-mark-children.vim'
+
+" Helpers for moving and manipulating files / directories.
+Plug 'tpope/vim-eunuch'
+
+" Run a diff on 2 directories.
+Plug 'will133/vim-dirdiff'
+
+" Run a diff on 2 blocks of text.
+Plug 'AndrewRadev/linediff.vim'
+
+" Briefly highlight which text was yanked.
+Plug 'machakann/vim-highlightedyank'
+
+" Highlight which character to jump to when using horizontal movement keys.
+Plug 'unblevable/quick-scope'
+
 
 call plug#end()
 
-"==================================================================="
+
+
+"=========================PLUGINS CONFIG============================"
+"
+"vim-oscyank config
 nmap <leader>y <Plug>OSCYankOperator
 nmap <leader>yy <leader>y_
 vmap <leader>y <Plug>OSCYankVisual
+
+"fzf config
+"let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
+
+"goyo config : zoom file like tmux zoom
+"goyo will effect colorscheme when exit,so source config
+autocmd! User GoyoLeave source ~/.vimrc
+
+" Trigger a highlight in the appropriate direction when pressing these keys:
+"let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " some recommended plugins for c/c++: gtags,cscopetag
 "" vim 用 map 命令来映射快捷键,它前面可以加一些前缀来对应
