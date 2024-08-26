@@ -68,6 +68,12 @@ nnoremap ss  :w<CR>:bn<CR>
 " 去掉有关vi一致性模式,避免操作习惯上的局限.
 set nocompatible
 
+set updatetime=1000
+
+
+set foldcolumn=1
+set signcolumn=yes
+
 " 设置文件编码,主要是避免中文乱码.
 " 先注释,后续遇到中文乱码再打开
 "set fileencodings=utf-8,cp936,big5,latin1
@@ -128,7 +134,7 @@ set backspace=indent,eol,start
 autocmd VimResized * wincmd =
 
 " Update a buffer's contents on focus if it changed outside of Vim.
-au FocusGained,BufEnter,VimEnter,WinEnter,BufWinEnter * :checktime
+au FocusGained,WinEnter * :checktime
 
 " Only show the cursor line in the active buffer.
 augroup CursorLine
@@ -265,6 +271,9 @@ hi CursorLine   cterm=none ctermbg=238 ctermfg=none
 hi Visual   cterm=none ctermbg=green ctermfg=red
 hi Search       cterm=none ctermbg=yellow ctermfg=red
 "hi IncSearch       cterm=none ctermbg=yellow ctermfg=red
+highlight Folded ctermfg=red ctermbg=none
+highlight FoldColumn ctermfg=yellow ctermbg=NONE
+highlight SignColumn ctermbg=none ctermfg=LightGrey
 
 "********* auto highlight the last insert context ******
 autocmd InsertEnter *   let b:CursorLineBeforeIns = line(".") |
@@ -333,6 +342,35 @@ Plug 'machakann/vim-highlightedyank'
 
 " Highlight which character to jump to when using horizontal movement keys.
 Plug 'unblevable/quick-scope'
+
+" Modify * to also work with visual selections.
+" use */# to search select test in visual mode
+Plug 'nelstrom/vim-visual-star-search'
+
+" Handle multi-file find and replace.
+" use grep/ag/etc to search file in quickfix
+Plug 'mhinz/vim-grepper'
+
+" Better display unwanted whitespace.
+Plug 'ntpeters/vim-better-whitespace'
+
+" Toggle comments in various ways.
+Plug 'tpope/vim-commentary'
+
+" Automatically set 'shiftwidth' + 'expandtab' (indention) based on file type.
+Plug 'tpope/vim-sleuth'
+
+" A number of useful motions for the quickfix list, pasting and more.
+Plug 'tpope/vim-unimpaired'
+
+" Drastically improve insert mode performance in files with folds.
+Plug 'Konfekt/FastFold'
+
+" Show git file changes in the gutter.
+Plug 'mhinz/vim-signify'
+
+" A git wrapper.
+Plug 'tpope/vim-fugitive'
 
 
 call plug#end()
