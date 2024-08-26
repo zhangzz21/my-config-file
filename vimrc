@@ -195,7 +195,7 @@ set laststatus=2
 " %l:光标所在的行号. %v:光标所在的虚拟列号.
 " %P: 显示当前内容在整个文件中的百分比.
 " %H和%M是strftime()函数的参数,获取时间.
-set statusline+=%F%r\ [HEX=%B][%l,%v,%P]\ %{strftime(\"%H:%M\")}
+set statusline+=%F%r%y%m\ [HEX=%B][%l,%v,%P]\ %{strftime(\"%H:%M\")}
 
 
 "function! s:statusline_expr()
