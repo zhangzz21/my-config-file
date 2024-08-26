@@ -372,6 +372,12 @@ Plug 'mhinz/vim-signify'
 " A git wrapper.
 Plug 'tpope/vim-fugitive'
 
+" A bunch of useful language related snippets (ultisnips is the engine).
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+" Automatically show Vim's complete menu while typing.
+Plug 'vim-scripts/AutoComplPop'
+
 
 call plug#end()
 
@@ -393,6 +399,11 @@ autocmd! User GoyoLeave source ~/.vimrc
 
 " Trigger a highlight in the appropriate direction when pressing these keys:
 "let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+" Better whitespace config
+let g:better_whitespace_enabled=1
+let g:strip_whitespace_on_save=1
+nnoremap <leader>s :StripWhitespace<cr>
 
 " some recommended plugins for c/c++: gtags,cscopetag
 "" vim 用 map 命令来映射快捷键,它前面可以加一些前缀来对应
