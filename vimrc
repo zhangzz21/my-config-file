@@ -57,15 +57,87 @@ nnoremap <silent> N Nzz
 nnoremap <silent> * *zz
 nnoremap <silent> # #zz
 nnoremap <silent> g* g*zz
+nnoremap <silent> <c-o> <c-o>zz
+nnoremap <silent> <c-i> <c-i>zz
+
+" Seamlessly treat visual lines as actual lines when moving around.
+noremap j gj
+noremap k gk
+noremap <Down> gj
+noremap <Up> gk
+inoremap <Down> <C-o>gj
+inoremap <Up> <C-o>gk
+
+" Navigate around splits with a single key combo.
+nnoremap <C-l> <C-w><C-l>
+nnoremap <C-h> <C-w><C-h>
+nnoremap <C-k> <C-w><C-k>
+nnoremap <C-j> <C-w><C-j>
+
+" Cycle through splits.
+nnoremap <S-Tab> <C-w>w
+
+" Format paragraph (selected or not) to 80 character lines.
+nnoremap <Leader>g gqap
+xnoremap <Leader>g gqa
+
+" Prevent x and the delete key from overriding what's in the clipboard.
+noremap x "_x
+noremap X "_x
+noremap <Del> "_x
+
+" Prevent selecting and pasting from overwriting what you originally copied.
+xnoremap p pgvy
+
+" Copy the current buffer's absolute path to your clipboard.
+nnoremap cp :call OSCYank(expand("%:p"))<CR>
+
+" The same as above but instead of acting on the whole file it will be
+" restricted to the previously visually selected range. You can do that by
+" pressing *, visually selecting the range you want it to apply to and then
+" press a key below to replace all instances of it in the current selection.
+xnoremap <Leader>r :s///g<Left><Left>
+xnoremap <Leader>rc :s///gc<Left><Left><Left>
+
+" Type a replacement term and press . to repeat the replacement again. Useful
+" for replacing a few instances of the term (comparable to multiple cursors).
+nnoremap <silent> <Leader>8 :let @/='\<'.expand('<cword>').'\>'<CR>cgn
+xnoremap <silent> <Leader>8 "sy:let @/=@s<CR>cgn
+
+" Toggle quickfix window.
+function! QuickFix_toggle()
+    for i in range(1, winnr('$'))
+        let bnum = winbufnr(i)
+        if getbufvar(bnum, '&buftype') == 'quickfix'
+            cclose
+            return
+        endif
+    endfor
+
+    copen
+endfunction
+
+nnoremap <silent> <Leader>c :call QuickFix_toggle()<CR>
+
+" Navigate the complete menu items like CTRL+n / CTRL+p would.
+inoremap <expr> <Down> pumvisible() ? "<C-n>" :"<Down>"
+inoremap <expr> <Up> pumvisible() ? "<C-p>" : "<Up>"
+
+" Select the complete menu item like CTRL+y would.
+inoremap <expr> <Right> pumvisible() ? "<C-y>" : "<Right>"
+inoremap <expr> <CR> pumvisible() ? "<C-y>" :"<CR>"
+
+" Cancel the complete menu item like CTRL+e would.
+inoremap <expr> <Left> pumvisible() ? "<C-e>" : "<Left>"
+
 
 " **************Custom key map*******************
-nnoremap <leader>w :w<Cr>
-nnoremap <leader>q :q<Cr>
+nnoremap <silent> <leader>w :w<Cr>
+nnoremap <silent> <leader>q :q<Cr>
 " 显示当前文件启用的高亮组设置
-nnoremap <leader>h :so $VIMRUNTIME/syntax/hitest.vim<CR>
+nnoremap <silent> <leader>h :so $VIMRUNTIME/syntax/hitest.vim<CR>
 " 去除搜索高亮和插入高亮
-nnoremap <leader>n :let @/=''<CR>:2match none<CR>
-nnoremap <leader>c cc<Esc>
+nnoremap <silent> <leader>n :let @/=''<CR>:2match none<CR>
 
 
 
@@ -177,6 +249,18 @@ autocmd BufNewFile,BufRead requirements*.txt set ft=python
 
 " Make sure .aliases, .bash_aliases and similar files get syntax highlighting.
 autocmd BufNewFile,BufRead .*aliases* set ft=sh
+
+" Auto move cursor to last exit position
+au BufReadPost * if line("'\"") > 0 | if line("'\"") <= line("$") | exe("norm '\"") | else |exe "norm $"| endif | endif
+
+" Make sure all types of requirements.txt files get syntax highlighting.
+autocmd BufNewFile,BufRead requirements*.txt set ft=python
+
+" Ensure all Markdown files don't get whitespace stripped but let it be visible.
+autocmd FileType markdown DisableStripWhitespaceOnSave
+
+" Ensure tabs don't get converted to spaces in Makefiles.
+autocmd FileType make setlocal noexpandtab
 
 
 "========================Set Vim Display============================"
