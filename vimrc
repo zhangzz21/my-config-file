@@ -81,6 +81,19 @@ set nocompatible
 
 set updatetime=1000
 
+" change buffer without save
+set hidden
+
+set splitbelow
+set splitright
+set ttyfast
+
+set undodir=/tmp
+set undofile
+set virtualedit=block
+
+" force vim pair match by %, like if/else
+runtime! macros/matchit.vim
 
 set foldcolumn=1
 set signcolumn=yes
