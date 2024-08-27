@@ -534,6 +534,9 @@ Plug 'godlygeek/tabular'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() },
                 \ 'for': ['markdown', 'vim-plug']}
 
+" interactive window choose mode
+Plug 't9md/vim-choosewin'
+
 
 call plug#end()
 
