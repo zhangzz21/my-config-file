@@ -134,7 +134,7 @@ set backspace=indent,eol,start
 autocmd VimResized * wincmd =
 
 " Update a buffer's contents on focus if it changed outside of Vim.
-au FocusGained,WinEnter * :checktime
+"au FocusGained,WinEnter * :checktime
 
 " Only show the cursor line in the active buffer.
 augroup CursorLine
@@ -378,6 +378,16 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 " Automatically show Vim's complete menu while typing.
 Plug 'vim-scripts/AutoComplPop'
 
+" Aligning text
+Plug 'godlygeek/tabular'
+
+" If you don't have nodejs and yarn
+" use pre build, add 'vim-plug' to the filetype list so vim-plug can update
+" this plugin
+" see: https://github.com/iamcco/markdown-preview.nvim/issues/50
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() },
+                \ 'for': ['markdown', 'vim-plug']}
+
 
 call plug#end()
 
@@ -396,6 +406,7 @@ vmap <leader>y <Plug>OSCYankVisual
 "goyo config : zoom file like tmux zoom
 "goyo will effect colorscheme when exit,so source config
 autocmd! User GoyoLeave source ~/.vimrc
+nnoremap <Leader>g :Goyo<CR>
 
 " Trigger a highlight in the appropriate direction when pressing these keys:
 "let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
