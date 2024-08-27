@@ -133,7 +133,8 @@ inoremap <expr> <Left> pumvisible() ? "<C-e>" : "<Left>"
 
 " **************Custom key map*******************
 nnoremap <silent> <leader>w :w<Cr>
-nnoremap <silent> <leader>q :q<Cr>
+nnoremap <leader>q :q<Cr>
+nnoremap <leader>e :e!<Cr>
 " 显示当前文件启用的高亮组设置
 nnoremap <silent> <leader>h :so $VIMRUNTIME/syntax/hitest.vim<CR>
 " 去除搜索高亮和插入高亮
@@ -262,6 +263,41 @@ autocmd FileType markdown DisableStripWhitespaceOnSave
 " Ensure tabs don't get converted to spaces in Makefiles.
 autocmd FileType make setlocal noexpandtab
 
+" Add all TODO items to the quickfix list relative to where you opened Vim.
+function! s:todo() abort
+  let entries = []
+  for cmd in ['git grep -niIw -e TODO -e FIXME 2> /dev/null',
+            \ 'grep -rniIw -e TODO -e FIXME . 2> /dev/null']
+    let lines = split(system(cmd), '\n')
+    if v:shell_error != 0 | continue | endif
+    for line in lines
+      let [fname, lno, text] = matchlist(line, '^\([^:]*\):\([^:]*\):\(.*\)')[1:3]
+      call add(entries, { 'filename': fname, 'lnum': lno, 'text': text })
+    endfor
+    break
+  endfor
+
+  if !empty(entries)
+    call setqflist(entries)
+    copen
+  endif
+endfunction
+
+command! Todo call s:todo()
+
+" Profile Vim by running this command once to start it and again to stop it.
+function! s:profile(bang)
+  if a:bang
+    profile pause
+    noautocmd qall
+  else
+    profile start /tmp/profile.log
+    profile func *
+    profile file *
+  endif
+endfunction
+
+command! -bang Profile call s:profile(<bang>0)
 
 "========================Set Vim Display============================"
 
@@ -420,15 +456,17 @@ call plug#begin()
 
 "List your plugins here
 Plug 'zhangzz21/vim-oscyank', {'branch': 'main'} "set vim OSC52 clipboard support
-"Plug 'rakr/vim-one'                             "vim one theme
-"Plug 'gruvbox-community/gruvbox'
-"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+
 " Better manage Vim sessions.
 Plug 'tpope/vim-obsession'
+
 "file zoom
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
+
 " Pass focus events from tmux to Vim (useful for autoread and linting tools).
 Plug 'tmux-plugins/vim-tmux-focus-events'
 
@@ -509,7 +547,18 @@ nmap <leader>yy <leader>y_
 vmap <leader>y <Plug>OSCYankVisual
 
 "fzf config
-"let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
+let g:fzf_vim = {}
+let g:fzf_vim.preview_window = ['right,80%', 'ctrl-/']
+
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-l> <plug>(fzf-complete-line)
 
 "goyo config : zoom file like tmux zoom
 "goyo will effect colorscheme when exit,so source config
