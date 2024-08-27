@@ -552,6 +552,7 @@ vmap <leader>y <Plug>OSCYankVisual
 "fzf config
 let g:fzf_vim = {}
 let g:fzf_vim.preview_window = ['right,80%', 'ctrl-/']
+let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all --preview "bat -n --color=always {}"'
 
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)
