@@ -11,7 +11,7 @@ set pastetoggle=<insert>
 
 " Short key for vim config
 nnoremap <leader>r :source ~/.vimrc<CR>
-noremap <Leader>ev :tabnew $MYVIMRC<CR>
+noremap <Leader>er :tabnew $MYVIMRC<CR>
 nnoremap q <esc>
 nnoremap Q q
 
@@ -551,8 +551,35 @@ vmap <leader>y <Plug>OSCYankVisual
 
 "fzf config
 let g:fzf_vim = {}
-let g:fzf_vim.preview_window = ['right,80%', 'ctrl-/']
-let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all --preview "bat -n --color=always {}"'
+let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
+let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
+
+" Customize fzf colors to match your color scheme.
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-b': 'split',
+  \ 'ctrl-v': 'vsplit',
+  \ 'ctrl-y': {lines -> OSCYank(join(reverse(lines), "\n"))}}
+
+" Launch fzf with CTRL+P.
+nnoremap <silent> <C-p> :FZF -m<CR>
+
+" Map a few common things to do with FZF.
+nnoremap <silent> <Leader><Enter> :Buffers<CR>
 
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)
@@ -561,8 +588,46 @@ omap <leader><tab> <plug>(fzf-maps-o)
 
 " Insert mode completion
 imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-j><c-k> <plug>(fzf-complete-path)
 imap <c-x><c-l> <plug>(fzf-complete-line)
+
+
+""""""""""""""""""
+"  ferm  config  "
+""""""""""""""""""
+
+" Disable netrw.
+let g:loaded_netrw  = 1
+let g:loaded_netrwPlugin = 1
+let g:loaded_netrwSettings = 1
+let g:loaded_netrwFileHandlers = 1
+
+augroup my-fern-hijack
+  autocmd!
+  autocmd BufEnter * ++nested call s:hijack_directory()
+augroup END
+
+function! s:hijack_directory() abort
+  let path = expand('%:p')
+  if !isdirectory(path)
+    return
+  endif
+  bwipeout %
+  execute printf('Fern %s', fnameescape(path))
+endfunction
+
+" Custom settings and mappings.
+let g:fern#disable_default_mappings = 1
+let g:fern#default_hidden = 1
+
+noremap <silent> <Leader>f :Fern . -drawer -reveal=% -toggle -width=35<CR>
+
+
+
+
+
+
+
 
 "goyo config : zoom file like tmux zoom
 "goyo will effect colorscheme when exit,so source config
