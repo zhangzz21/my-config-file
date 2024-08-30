@@ -570,6 +570,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'bling/vim-bufferline'
 
+Plug 'tpope/vim-surround'
+
 call plug#end()
 
 """"""""""""""""""""
@@ -740,6 +742,7 @@ let g:limelight_priority = -1
 """"""""""""""""""""
 let g:airline_powerline_fonts = 1
 " let g:airline_statusline_ontop=1
+let g:airline_theme='bubblegum'
 
 
 " some recommended plugins for c/c++: gtags,cscopetag
