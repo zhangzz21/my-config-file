@@ -154,6 +154,8 @@ set nocompatible
 
 set updatetime=1000
 
+set maxmempattern=1000000000
+
 " change buffer without save
 set hidden
 
@@ -556,19 +558,19 @@ let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
 let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
 
 " Customize fzf colors to match your color scheme.
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+" let g:fzf_colors =
+" \ { 'fg':      ['fg', 'Normal'],
+"   \ 'bg':      ['bg', 'Normal'],
+"   \ 'hl':      ['fg', 'Comment'],
+"   \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+"   \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+"   \ 'hl+':     ['fg', 'Statement'],
+"   \ 'info':    ['fg', 'PreProc'],
+"   \ 'prompt':  ['fg', 'Conditional'],
+"   \ 'pointer': ['fg', 'Exception'],
+"   \ 'marker':  ['fg', 'Keyword'],
+"   \ 'spinner': ['fg', 'Label'],
+"   \ 'header':  ['fg', 'Comment'] }
 
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
@@ -624,9 +626,48 @@ endfunction
 noremap <silent> <Leader>f :Fern . -drawer -reveal=% -toggle -width=35<CR>
 
 
+" .............................................................................
+" mhinz/vim-grepper
+" .............................................................................
 
+let g:grepper={}
+let g:grepper.tools=["rg"]
 
+xmap gr <plug>(GrepperOperator)
 
+" " After searching for text, press this mapping to do a project wide find and
+" " replace. It's similar to <leader>r except this one applies to all matches
+" " across all files instead of just the current file.
+" nnoremap <Leader>R
+"   \ :let @s='\<'.expand('<cword>').'\>'<CR>
+"   \ :Grepper -cword -noprompt<CR>
+"   \ :cfdo %s/<C-r>s//g \| update
+"   \<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+
+" " The same as above except it works with a visual selection.
+" xmap <Leader>R
+"     \ "sy
+"     \ gvgr
+"     \ :cfdo %s/<C-r>s//g \| update
+"      \<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+
+" .............................................................................
+" ntpeters/vim-better-whitespace
+" .............................................................................
+
+let g:strip_whitespace_confirm=0
+let g:strip_whitelines_at_eof=1
+let g:strip_whitespace_on_save=1
+" list to control filetype not be strip when saving
+let g:better_whitespace_filetypes_blacklist=[]
+"nnoremap <leader>s :StripWhitespace<cr>
+
+" .............................................................................
+" SirVer/ultisnips
+" .............................................................................
+
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 
 
@@ -662,10 +703,7 @@ let g:limelight_priority = -1
 " Trigger a highlight in the appropriate direction when pressing these keys:
 "let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
-" Better whitespace config
-let g:better_whitespace_enabled=1
-let g:strip_whitespace_on_save=1
-nnoremap <leader>s :StripWhitespace<cr>
+
 
 " some recommended plugins for c/c++: gtags,cscopetag
 "" vim 用 map 命令来映射快捷键,它前面可以加一些前缀来对应
