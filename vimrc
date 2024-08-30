@@ -568,6 +568,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'bling/vim-bufferline'
 
 call plug#end()
 
@@ -734,6 +735,11 @@ let g:limelight_priority = -1
 " Trigger a highlight in the appropriate direction when pressing these keys:
 "let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
+""""""""""""""""""""
+"  AIRLINE CONFIG  "
+""""""""""""""""""""
+let g:airline_powerline_fonts = 1
+" let g:airline_statusline_ontop=1
 
 
 " some recommended plugins for c/c++: gtags,cscopetag
