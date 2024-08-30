@@ -16,6 +16,7 @@ nnoremap <Leader>d  :set mouse=a ttymouse=xterm2<cr>
 nnoremap <Leader>dd  :set mouse=<cr>
 nnoremap q <esc>
 nnoremap Q q
+nnoremap cc c$
 
 
 " Short key to change display
@@ -166,7 +167,9 @@ set ttyfast
 
 set undodir=~/.vim/undodir
 set undofile
-set virtualedit=block
+set virtualedit=all
+nnoremap <leader>v :set virtualedit=all<Cr>
+nnoremap <leader>vv :set virtualedit=<Cr>
 
 " Map command to delete file undofile
 command  RMundofile :execute  '!rm  ' . fnameescape(undofile(@%))
@@ -183,7 +186,7 @@ set signcolumn=yes
 
 " 设置文件编码,主要是避免中文乱码.
 " 先注释,后续遇到中文乱码再打开
-"set fileencodings=utf-8,cp936,big5,latin1
+set encoding=utf-8
 
 " Paste mode donot change content from clipboard
 
@@ -347,7 +350,7 @@ set laststatus=2
 " %l:光标所在的行号. %v:光标所在的虚拟列号.
 " %P: 显示当前内容在整个文件中的百分比.
 " %H和%M是strftime()函数的参数,获取时间.
-set statusline+=%F%r%y%m\ [HEX=%B][%l,%v,%P]\ %{strftime(\"%H:%M\")}
+" set statusline+=%F%r%y%m\ [HEX=%B][%l,%v,%P]\ %{strftime(\"%H:%M\")}
 
 
 "function! s:statusline_expr()
@@ -416,7 +419,7 @@ echohl MyEchoMes
 
 " 将tab字符和空格的颜色组为MyTabSpace,
 "match MyTabSpace /\t\| /
-call matchadd('MyTabSpace', ' ', 1000)
+"call matchadd('MyTabSpace', ' ', 1000)
 
 
 hi CursorColumn   cterm=none ctermbg=238 ctermfg=none
@@ -435,18 +438,16 @@ autocmd InsertEnter *   let b:CursorLineBeforeIns = line(".") |
 autocmd InsertLeave *   let b:CursorLineAfterIns = line(".")  |
             \  let b:CursorColAfterIns = col(".")
 
-"autocmd InsertLeave * echom  b:CursorLineBeforeIns b:CursorColBeforeIns b:CursorLineAfterIns b:CursorColAfterIns
-autocmd InsertLeave * echom "INSERT: '" . @. . "'" |
-            \ execute '2match MyInsertContent ' . '/\%' . b:CursorLineBeforeIns . 'l\%' . b:CursorColBeforeIns .
-            \ 'c\(.\|\n\)*\%' . b:CursorLineAfterIns . 'l\%' . b:CursorColAfterIns .'c./'
+" autocmd InsertLeave * echom "INSERT: '" . @. . "'" |
+"             \ execute '2match MyInsertContent ' . '/\%' . b:CursorLineBeforeIns . 'l\%' . b:CursorColBeforeIns .
+"             \ 'c\(.\|\n\)*\%' . b:CursorLineAfterIns . 'l\%' . b:CursorColAfterIns .'c./'
 
 
 
 
-
-autocmd BufEnter * silent!  2match none |
-            \ silent! execute '2match MyInsertContent ' . '/\%' . b:CursorLineBeforeIns . 'l\%' . b:CursorColBeforeIns .
-            \ 'c\(.\|\n\)*\%' . b:CursorLineAfterIns . 'l\%' . b:CursorColAfterIns .'c./'
+" autocmd BufEnter * silent!  2match none |
+"             \ silent! execute '2match MyInsertContent ' . '/\%' . b:CursorLineBeforeIns . 'l\%' . b:CursorColBeforeIns .
+"             \ 'c\(.\|\n\)*\%' . b:CursorLineAfterIns . 'l\%' . b:CursorColAfterIns .'c./'
 
 "===========================Vim Plugins============================="
 
@@ -459,8 +460,9 @@ if !filereadable(expand("~/.vim/autoload/plug.vim"))
     echom "Downloaded vim-plug successfully!"
 endif
 
-" Vim plugins Install
-
+""""""""""""""""""""
+"  #PLUGS INSTALL  "
+""""""""""""""""""""
 call plug#begin()
 
 "List your plugins here
@@ -536,19 +538,42 @@ Plug 'vim-scripts/AutoComplPop'
 " Aligning text
 Plug 'godlygeek/tabular'
 
-" If you don't have nodejs and yarn
-" use pre build, add 'vim-plug' to the filetype list so vim-plug can update
-" this plugin
-" see: https://github.com/iamcco/markdown-preview.nvim/issues/50
+" If you don't have nodejs and yarn  use pre build
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() },
                 \ 'for': ['markdown', 'vim-plug']}
 
 " interactive window choose mode
 Plug 't9md/vim-choosewin'
 
+" visual-block, but the plugin works mostly from normal mode.
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
+" auto complete path pair char ,etc []/()
+Plug 'Raimondi/delimitMate'
+
+" use tab to complete word in insert mode
+Plug 'ervandew/supertab'
+
+" ☆ auto check syntax error based LSP realtimely
+Plug 'dense-analysis/ale'
+
+" fuzzy search like fzf, but no dependency ,only write by vimscript
+" we can use this to search on some old sever without fzf/ag
+Plug 'ctrlpvim/ctrlp.vim'
+
+" Vim LSP
+" Plug 'prabirshrestha/vim-lsp'
+" Plug 'mattn/vim-lsp-settings'
+" Plug 'prabirshrestha/asyncomplete.vim'
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
+""""""""""""""""""""
+"  #PLUGS INSTALL  "
+""""""""""""""""""""
 
 
 "=========================PLUGINS CONFIG============================"
