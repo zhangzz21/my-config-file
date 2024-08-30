@@ -401,6 +401,7 @@ set wrapscan
 hi MyTabSpace cterm=none ctermfg=none ctermbg=none
 hi MyInsertContent cterm=none ctermfg=green ctermbg=darkgrey
 hi MyEchoMes cterm=none ctermfg=red ctermbg=none
+hi Mylime cterm=none ctermfg=darkgrey ctermbg=red
 
 " set vim messege highlight
 echohl MyEchoMes
@@ -617,8 +618,8 @@ function! s:hijack_directory() abort
 endfunction
 
 " Custom settings and mappings.
-let g:fern#disable_default_mappings = 1
-let g:fern#default_hidden = 1
+"let g:fern#disable_default_mappings = 1
+"let g:fern#default_hidden = 1
 
 noremap <silent> <Leader>f :Fern . -drawer -reveal=% -toggle -width=35<CR>
 
@@ -632,7 +633,31 @@ noremap <silent> <Leader>f :Fern . -drawer -reveal=% -toggle -width=35<CR>
 "goyo config : zoom file like tmux zoom
 "goyo will effect colorscheme when exit,so source config
 autocmd! User GoyoLeave source ~/.vimrc
-nnoremap <Leader>g :Goyo<CR>
+nnoremap <Leader>g :Goyo 100<CR>
+
+"""""""""""""""""""""""
+"  limelight CONFIG   "
+"""""""""""""""""""""""
+" Color name (:help cterm-colors) or ANSI code
+let g:limelight_conceal_ctermfg = 'gray'
+
+
+" Default: 0.5
+let g:limelight_default_coefficient = 1
+
+" Number of preceding/following paragraphs to include (default: 0)
+let g:limelight_paragraph_span = 1
+
+" Beginning/end of paragraph
+"   When there's no empty line between the paragraphs
+"   and each paragraph starts with indentation
+" let g:limelight_bop = '^\s'
+" let g:limelight_eop = '\ze\n^\s'
+
+" Highlighting priority (default: 10)
+"   Set it to -1 not to overrule hlsearch
+let g:limelight_priority = -1
+
 
 " Trigger a highlight in the appropriate direction when pressing these keys:
 "let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
