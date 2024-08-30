@@ -11,7 +11,9 @@ set pastetoggle=<insert>
 
 " Short key for vim config
 nnoremap <leader>r :source ~/.vimrc<CR>
-noremap <Leader>er :tabnew $MYVIMRC<CR>
+nnoremap <Leader>er :tabnew $MYVIMRC<CR>
+nnoremap <Leader>d  :set mouse=a ttymouse=xterm2<cr>
+nnoremap <Leader>dd  :set mouse=<cr>
 nnoremap q <esc>
 nnoremap Q q
 
@@ -147,7 +149,6 @@ nnoremap ss  :w<CR>:bn<CR>
 
 
 
-
 "======================Set Vim Default Attributes==================="
 " 去掉有关vi一致性模式,避免操作习惯上的局限.
 set nocompatible
@@ -163,9 +164,16 @@ set splitbelow
 set splitright
 set ttyfast
 
-set undodir=/tmp
+set undodir=~/.vim/undodir
 set undofile
 set virtualedit=block
+
+" Map command to delete file undofile
+command  RMundofile :execute  '!rm  ' . fnameescape(undofile(@%))
+"autocmd ShellCmdPost *  source $MYVIMRC
+
+" set swap file directory
+set directory=~/.vim/tmp
 
 " force vim pair match by %, like if/else
 runtime! macros/matchit.vim
@@ -189,8 +197,6 @@ set t_Co=256
 syntax on
 "syntax enable
 
-" set swap file directory
-set directory=~/.tmp,.
 
 " Clipboard
 set clipboard=unnamed
