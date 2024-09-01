@@ -18,7 +18,6 @@ nnoremap q <esc>
 nnoremap Q q
 nnoremap cc c$
 
-
 " Short key to change display
 nnoremap <Leader>l :set list!<CR>
 
@@ -139,7 +138,7 @@ nnoremap <silent> <leader>w :w<Cr>
 nnoremap <leader>q :q<Cr>
 nnoremap <leader>e :e!<Cr>
 " 显示当前文件启用的高亮组设置
-nnoremap <silent> <leader>h :so $VIMRUNTIME/syntax/hitest.vim<CR>
+" nnoremap <silent> <leader>h :so $VIMRUNTIME/syntax/hitest.vim<CR>
 " 去除搜索高亮和插入高亮
 nnoremap <silent> <leader>n :let @/=''<CR>:2match none<CR>
 
@@ -412,10 +411,12 @@ set wrapscan
 hi MyTabSpace cterm=none ctermfg=none ctermbg=none
 hi MyInsertContent cterm=none ctermfg=green ctermbg=darkgrey
 hi MyEchoMes cterm=none ctermfg=red ctermbg=none
-hi Mylime cterm=none ctermfg=darkgrey ctermbg=red
+hi MyLineHi cterm=none ctermfg=darkgrey ctermbg=red
 
 " set vim messege highlight
 echohl MyEchoMes
+nnoremap <silent> <leader>h :call matchadd('MyLineHi', '\%'.line('.').'l')<cr>
+nnoremap <silent> <leader>hh :call clearmatches()<cr>
 
 " 将tab字符和空格的颜色组为MyTabSpace,
 "match MyTabSpace /\t\| /
@@ -572,6 +573,13 @@ Plug 'bling/vim-bufferline'
 
 Plug 'tpope/vim-surround'
 
+"Plug 'inkarkat/vim-mark'
+Plug 'idbrii/vim-hiinterestingword'
+
+
+Plug 'coderifous/textobj-word-column.vim'
+Plug 'azabiong/vim-highlighter'
+
 call plug#end()
 
 """"""""""""""""""""
@@ -709,6 +717,7 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 "goyo will effect colorscheme when exit,so source config
 autocmd! User GoyoLeave source ~/.vimrc
 nnoremap <Leader>g :Goyo 100<CR>
+nnoremap <Leader>z :Goyo 100%x100%<CR>
 
 """""""""""""""""""""""
 "  limelight CONFIG   "
