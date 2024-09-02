@@ -8,13 +8,26 @@
 "============================================================================"
 
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"              Firstly Set Vim Log File From Vim Start To #Debug             "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Firstly Set Vim Log File From Vim Start To Debug
-let g:MyVimMesFile=$HOME. '/.vim/log/' .  substitute(system('date +"%Y%m%d-%H%M%S-%2N"'), '\n', '', 'g')
+let g:MyVimMesFile=$HOME. '/.vim/log/' .
+      \substitute(system('date +"%Y%m%d-%H%M%S-%2N"'), '\n', '', 'g')
 "echo g:MyVimMesFile
 execute 'redir >> ' . g:MyVimMesFile
 
 " nnoremap <leader>m :redir END
 
+"""""""""""""""""""""""""""""""""""""END""""""""""""""""""""""""""""""""""""""
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               basic key map                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Map leader key
 let mapleader = ' '
@@ -60,8 +73,15 @@ nnoremap <S-Tab> <C-w>w
 nnoremap <Leader>g gqap
 xnoremap <Leader>g gqa
 
-" Set paste mode toggle key
-set pastetoggle=<insert>
+"""""""""""""""""""""""""""""""""""""END""""""""""""""""""""""""""""""""""""""
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                              key map command                               "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
 
 " Short key for vim config
 nnoremap <leader>r :source ~/.vimrc<CR>
@@ -154,15 +174,22 @@ nnoremap ee  $%i<space><space>return;<CR><Esc>
 nnoremap ss  :w<CR>:bn<CR>
 
 
-
-"======================Set Vim Default Attributes==================="
-"in some terminal <alt> will be convert to êêêêêêêêêê;ê
-execute "set <M-j> =\ej"
-execute "set <M-k> =\ek"
-execute "set <M-h> =\eh"
-execute "set <M-l> =\el"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                            basic option setting                            "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
+"in some terminal <alt> will be convert to <esc>
+"set <alt> key code to enable vim use alt key map
+execute "set <M-j> =\ej"    | "ê
+execute "set <M-k> =\ek"    | "ë
+execute "set <M-h> =\eh"    | "è
+execute "set <M-l> =\el"    | "ì
+
+set viminfo='100,<50,s10,h
+
+" Set paste mode toggle key
+set pastetoggle=<insert>
 
 " 去掉有关vi一致性模式,避免操作习惯上的局限.
 set nocompatible
