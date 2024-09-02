@@ -1,6 +1,11 @@
 "==================================================================="
 "
 " Map leader key
+
+" firstly set vim log file from vim start to debug
+execute 'redir >> ~/.vim/log/' . substitute(system('date +"%Y-%m-%d-%H-%M-%S-%2N"'), '\n', '', 'g') . '.messege'
+
+
 let mapleader = ' '
 
 " Maps space to colon, time saver
@@ -150,6 +155,14 @@ nnoremap ss  :w<CR>:bn<CR>
 
 
 "======================Set Vim Default Attributes==================="
+"in some terminal <alt> will be convert to êêêêêêêêêê;ê
+execute "set <M-j> =\ej"
+execute "set <M-k> =\ek"
+execute "set <M-h> =\eh"
+execute "set <M-l> =\el"
+
+
+
 " 去掉有关vi一致性模式,避免操作习惯上的局限.
 set nocompatible
 
@@ -166,7 +179,7 @@ set ttyfast
 
 set undodir=~/.vim/undodir
 set undofile
-set virtualedit=all
+set virtualedit=
 nnoremap <leader>v :set virtualedit=all<Cr>
 nnoremap <leader>vv :set virtualedit=<Cr>
 
@@ -185,7 +198,7 @@ set signcolumn=yes
 
 " 设置文件编码,主要是避免中文乱码.
 " 先注释,后续遇到中文乱码再打开
-set encoding=utf-8
+" set encoding=utf-8
 
 " Paste mode donot change content from clipboard
 
@@ -419,12 +432,12 @@ nnoremap <silent> <leader>h :call matchadd('MyLineHi', '\%'.line('.').'l')<cr>
 nnoremap <silent> <leader>hh :call clearmatches()<cr>
 
 " 将tab字符和空格的颜色组为MyTabSpace,
-"match MyTabSpace /\t\| /
-"call matchadd('MyTabSpace', ' ', 1000)
+" match MyTabSpace /\t\| /
+" call matchadd('MyTabSpace', ' ', 1000)
 
 
 hi CursorColumn   cterm=none ctermbg=238 ctermfg=none
-hi CursorLine   cterm=none ctermbg=238 ctermfg=none
+hi CursorLine   cterm=nocombine ctermbg=238 ctermfg=none
 hi Visual   cterm=none ctermbg=green ctermfg=red
 hi Search       cterm=none ctermbg=yellow ctermfg=red
 "hi IncSearch       cterm=none ctermbg=yellow ctermfg=red
@@ -465,6 +478,9 @@ endif
 "  #PLUGS INSTALL  "
 """"""""""""""""""""
 call plug#begin()
+
+" VIM 中文文档
+Plug 'yianwillis/vimcdoc'
 
 "List your plugins here
 Plug 'zhangzz21/vim-oscyank', {'branch': 'main'} "set vim OSC52 clipboard support
@@ -572,6 +588,10 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'bling/vim-bufferline'
 
 Plug 'tpope/vim-surround'
+Plug 'matze/vim-move'
+
+"FUNNY VIM Draw ascii art
+Plug 'vim-scripts/DrawIt'
 
 "Plug 'inkarkat/vim-mark'
 Plug 'idbrii/vim-hiinterestingword'
