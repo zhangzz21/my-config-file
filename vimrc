@@ -9,9 +9,12 @@
 
 
 " Firstly Set Vim Log File From Vim Start To Debug
-execute 'redir >> ~/.vim/log/' .
-    \substitute(system('date +"%Y-%m-%d-%H-%M-%S-%2N"'), '\n', '', 'g') .
-    \'.messege'
+let g:MyVimMesFile=$HOME. '/.vim/log/' .  substitute(system('date +"%Y%m%d-%H%M%S-%2N"'), '\n', '', 'g')
+"echo g:MyVimMesFile
+execute 'redir >> ' . g:MyVimMesFile
+
+" nnoremap <leader>m :redir END
+
 
 " Map leader key
 let mapleader = ' '
