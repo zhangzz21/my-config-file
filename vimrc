@@ -1,63 +1,33 @@
-"==================================================================="
-"
+"============================================================================"
+"       ███╗   ███╗██╗   ██╗██╗   ██╗██╗███╗   ███╗██████╗  ██████╗          "
+"       ████╗ ████║╚██╗ ██╔╝██║   ██║██║████╗ ████║██╔══██╗██╔════╝          "
+"       ██╔████╔██║ ╚████╔╝ ██║   ██║██║██╔████╔██║██████╔╝██║               "
+"       ██║╚██╔╝██║  ╚██╔╝  ╚██╗ ██╔╝██║██║╚██╔╝██║██╔══██╗██║               "
+"       ██║ ╚═╝ ██║   ██║    ╚████╔╝ ██║██║ ╚═╝ ██║██║  ██║╚██████╗          "
+"       ╚═╝     ╚═╝   ╚═╝     ╚═══╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝          "
+"============================================================================"
+
+
+" Firstly Set Vim Log File From Vim Start To Debug
+execute 'redir >> ~/.vim/log/' .
+    \substitute(system('date +"%Y-%m-%d-%H-%M-%S-%2N"'), '\n', '', 'g') .
+    \'.messege'
+
 " Map leader key
-
-" firstly set vim log file from vim start to debug
-execute 'redir >> ~/.vim/log/' . substitute(system('date +"%Y-%m-%d-%H-%M-%S-%2N"'), '\n', '', 'g') . '.messege'
-
-
 let mapleader = ' '
 
-" Maps space to colon, time saver
+" Use ';' to ex
 nnoremap ; :
 
-" Set paste mode toggle key
-set pastetoggle=<insert>
-
-" Short key for vim config
-nnoremap <leader>r :source ~/.vimrc<CR>
-nnoremap <Leader>er :tabnew $MYVIMRC<CR>
-nnoremap <Leader>d  :set mouse=a ttymouse=xterm2<cr>
-nnoremap <Leader>dd  :set mouse=<cr>
+" Some Simple More friendly Key Remapping
 nnoremap q <esc>
 nnoremap Q q
 nnoremap cc c$
-
-" Short key to change display
-nnoremap <Leader>l :set list!<CR>
-
-" Set cursor style
-" Reference chart of values:
-"   Ps = 0  -> blinking block.
-"   Ps = 1  -> blinking block (default).
-"   Ps = 2  -> steady block.
-"   Ps = 3  -> blinking underline.
-"   Ps = 4  -> steady underline.
-"   Ps = 5  -> blinking bar (xterm).
-"   Ps = 6  -> steady bar (xterm).
-" let &t_SI = "\e[6 q"
-" let &t_EI = "\e[2 q"
-
-" Key Remapping
 imap jk <Esc>
 nnoremap tn  :tabnew<CR>
 nnoremap tj  :tabnext<CR>
 nnoremap tk  :tabprev<CR>
 nnoremap tc  :tabclose<CR>
-
-vnoremap y ygv<Esc> " keep cursor position after visual yank
-"vnoremap <Leader>tc c<C-r>=system('~/.config/tcc', getreg('"'))[:-2]<CR>
-
-" Move  select lines up or down
-nnoremap <C-k> :m .-2<CR>==
-nnoremap <C-j> :m .+1<CR>==
-vnoremap <C-k> :m '<-2<CR>gv=gv
-vnoremap <C-j> :m '>+1<CR>gv=gv
-nnoremap <C-Up> :m .-2<CR>==
-nnoremap <C-Down> :m .+1<CR>==
-vnoremap <C-Up> :m '<-2<CR>gv=gv
-vnoremap <C-Down> :m '>+1<CR>gv=gv
-
 "Keep search pattern at the center of the screen."
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
@@ -66,7 +36,6 @@ nnoremap <silent> # #zz
 nnoremap <silent> g* g*zz
 nnoremap <silent> <c-o> <c-o>zz
 nnoremap <silent> <c-i> <c-i>zz
-
 " Seamlessly treat visual lines as actual lines when moving around.
 noremap j gj
 noremap k gk
@@ -87,6 +56,35 @@ nnoremap <S-Tab> <C-w>w
 " Format paragraph (selected or not) to 80 character lines.
 nnoremap <Leader>g gqap
 xnoremap <Leader>g gqa
+
+" Set paste mode toggle key
+set pastetoggle=<insert>
+
+" Short key for vim config
+nnoremap <leader>r :source ~/.vimrc<CR>
+nnoremap <Leader>er :tabnew $MYVIMRC<CR>
+nnoremap <Leader>d  :set mouse=a ttymouse=xterm2<cr>
+nnoremap <Leader>dd  :set mouse=<cr>
+
+" Short key to change display
+nnoremap <Leader>l :set list!<CR>
+
+
+
+vnoremap y ygv<Esc> " keep cursor position after visual yank
+"vnoremap <Leader>tc c<C-r>=system('~/.config/tcc', getreg('"'))[:-2]<CR>
+
+" Move  select lines up or down
+nnoremap <C-k> :m .-2<CR>==
+nnoremap <C-j> :m .+1<CR>==
+vnoremap <C-k> :m '<-2<CR>gv=gv
+vnoremap <C-j> :m '>+1<CR>gv=gv
+nnoremap <C-Up> :m .-2<CR>==
+nnoremap <C-Down> :m .+1<CR>==
+vnoremap <C-Up> :m '<-2<CR>gv=gv
+vnoremap <C-Down> :m '>+1<CR>gv=gv
+
+
 
 " Prevent x and the delete key from overriding what's in the clipboard.
 noremap x "_x
@@ -436,6 +434,7 @@ nnoremap <silent> <leader>hh :call clearmatches()<cr>
 " call matchadd('MyTabSpace', ' ', 1000)
 
 
+highlight ColorColumn ctermbg=238
 hi CursorColumn   cterm=none ctermbg=238 ctermfg=none
 hi CursorLine   cterm=nocombine ctermbg=238 ctermfg=none
 hi Visual   cterm=none ctermbg=green ctermfg=red
@@ -599,6 +598,8 @@ Plug 'idbrii/vim-hiinterestingword'
 
 Plug 'coderifous/textobj-word-column.vim'
 Plug 'azabiong/vim-highlighter'
+
+Plug 'guns/xterm-color-table.vim'
 
 call plug#end()
 
@@ -797,3 +798,15 @@ let g:airline_theme='bubblegum'
 "let g:GtagsCscope_Quiet = 1
 "" 设置只有一个匹配结果时,不显示quickfix窗口
 "let g:Gtags_Close_When_Single = 1
+"
+" Set cursor style
+" Reference chart of values:
+"   Ps = 0  -> blinking block.
+"   Ps = 1  -> blinking block (default).
+"   Ps = 2  -> steady block.
+"   Ps = 3  -> blinking underline.
+"   Ps = 4  -> steady underline.
+"   Ps = 5  -> blinking bar (xterm).
+"   Ps = 6  -> steady bar (xterm).
+" let &t_SI = "\e[6 q"
+" let &t_EI = "\e[2 q"
