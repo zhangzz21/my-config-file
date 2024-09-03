@@ -44,7 +44,7 @@ nnoremap tn  :tabnew<CR>
 nnoremap tj  :tabnext<CR>
 nnoremap tk  :tabprev<CR>
 nnoremap tc  :tabclose<CR>
-"Keep search pattern at the center of the screen."
+" Keep search pattern at the center of the screen."
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
 nnoremap <silent> * *zz
@@ -53,20 +53,26 @@ nnoremap <silent> g* g*zz
 nnoremap <silent> <c-o> <c-o>zz
 nnoremap <silent> <c-i> <c-i>zz
 " Seamlessly treat visual lines as actual lines when moving around.
+noremap 0 ^
+noremap ^ 0
 noremap j gj
 noremap k gk
+noremap J 5gj
+noremap K 5gk
+noremap gj J
+noremap gk K " 'K' can call shell cmd,this have many funny use by 'keywordprg'
+noremap r <c-r>
+noremap <c-r> r
 noremap <Down> gj
 noremap <Up> gk
 inoremap <Down> <C-o>gj
 inoremap <Up> <C-o>gk
 
-" Navigate around splits with a single key combo.
+" Navigate windows
 nnoremap <C-l> <C-w><C-l>
 nnoremap <C-h> <C-w><C-h>
 nnoremap <C-k> <C-w><C-k>
 nnoremap <C-j> <C-w><C-j>
-
-" Cycle through splits.
 nnoremap <S-Tab> <C-w>w
 
 " Format paragraph (selected or not) to 80 character lines.
@@ -107,8 +113,9 @@ nnoremap <Leader>dd     :set mouse=<cr>
 nnoremap <silent>       <leader>w :w<Cr>
 nnoremap <leader>q      :q<Cr>
 nnoremap <leader>e      :e!<Cr>
-nnoremap <silent>       <leader>n :let @/='\aSearchClear\a'<CR>:2match none<CR>
-nnoremap <Leader>l      :set list!<CR>
+nnoremap <leader>n     :let @/='\aSearchClear\a'<Cr>
+nnoremap <Leader>l      :set list! \| set colorcolumn=80<cr>
+nnoremap <Leader>ll      :set list! \| set colorcolumn=<cr>
 nnoremap <leader>v      :set virtualedit=all<Cr>
 nnoremap <leader>vv     :set virtualedit=<Cr>
 
@@ -207,7 +214,7 @@ nnoremap <silent> <leader>hh :call clearmatches()<cr>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                            basic option setting                            "
+"                            basic #option setting                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -218,7 +225,9 @@ execute "set <M-j> =\ej"    | "ê
 execute "set <M-k> =\ek"    | "ë
 execute "set <M-h> =\eh"    | "è
 execute "set <M-l> =\el"    | "ì
+" vim
 
+set keywordprg=man " this will be overwrite by setlocal for every ft
 set viminfo='100,<50,s10,h
 set backspace=indent,eol,start
 set history=2000
@@ -302,6 +311,7 @@ set expandtab
 set shiftwidth=4
 set autoindent
 set softtabstop=-1
+set smarttab
 
 " searching setting
 set ignorecase
@@ -410,91 +420,91 @@ if !filereadable(expand("~/.vim/autoload/plug.vim"))
     echom "Downloaded vim-plug successfully!"
 endif
 
-""""""""""""""""""""
-"  #PLUGS INSTALL  "
-""""""""""""""""""""
-call plug#begin()
-
-" " VIM 中文文档
-" Plug 'yianwillis/vimcdoc'
-"
-" "List your plugins here
-" Plug 'zhangzz21/vim-oscyank', {'branch': 'main'} "set vim OSC52 clipboard support
+" set FocusGained and FocusLost term code t_ti t_te, old vim may need
+" Plug 'tmux-plugins/vim-tmux-focus-events'
 "
 " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 " Plug 'junegunn/fzf.vim'
 "
-" " Better manage Vim sessions.
-" Plug 'tpope/vim-obsession'
-"
 " "file zoom
 " Plug 'junegunn/goyo.vim'
 " Plug 'junegunn/limelight.vim'
-"
-" " Pass focus events from tmux to Vim (useful for autoread and linting tools).
-" Plug 'tmux-plugins/vim-tmux-focus-events'
-"
 " " Navigate and manipulate files in a tree view.
 " Plug 'lambdalisue/fern.vim'
 " Plug 'lambdalisue/fern-mapping-mark-children.vim'
-"
-" " Helpers for moving and manipulating files / directories.
-" Plug 'tpope/vim-eunuch'
-"
-" " Run a diff on 2 directories.
-" Plug 'will133/vim-dirdiff'
-"
-" " Run a diff on 2 blocks of text.
-" Plug 'AndrewRadev/linediff.vim'
-"
-" " Briefly highlight which text was yanked.
-" Plug 'machakann/vim-highlightedyank'
-"
-" " Highlight which character to jump to when using horizontal movement keys.
-" Plug 'unblevable/quick-scope'
-"
-" " Modify * to also work with visual selections.
-" " use */# to search select test in visual mode
-" Plug 'nelstrom/vim-visual-star-search'
-"
+
+
 " " Handle multi-file find and replace.
 " " use grep/ag/etc to search file in quickfix
 " Plug 'mhinz/vim-grepper'
-"
-" " Better display unwanted whitespace.
-" Plug 'ntpeters/vim-better-whitespace'
-"
-" " Toggle comments in various ways.
-" Plug 'tpope/vim-commentary'
-"
-" " Automatically set 'shiftwidth' + 'expandtab' (indention) based on file type.
-" Plug 'tpope/vim-sleuth'
-"
 " " A number of useful motions for the quickfix list, pasting and more.
 " Plug 'tpope/vim-unimpaired'
-"
-" " Drastically improve insert mode performance in files with folds.
-" Plug 'Konfekt/FastFold'
-"
-" " Show git file changes in the gutter.
-" Plug 'mhinz/vim-signify'
-"
 " " A git wrapper.
 " Plug 'tpope/vim-fugitive'
 "
 " " A bunch of useful language related snippets (ultisnips is the engine).
 " Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-"
-" " Automatically show Vim's complete menu while typing.
-" Plug 'vim-scripts/AutoComplPop'
-"
 " " Aligning text
 " Plug 'godlygeek/tabular'
-"
 " " If you don't have nodejs and yarn  use pre build
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() },
-"                 \ 'for': ['markdown', 'vim-plug']}
-"
+"       \'for': ['markdown', 'vim-plug']}
+""""""""""""""""""""
+"  #PLUGS INSTALL  "
+""""""""""""""""""""
+call plug#begin()
+
+" vim ui plugs
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'bling/vim-bufferline'
+
+" customize vim initial interface
+Plug 'mhinz/vim-startify'
+
+" Toggle comments in various ways.
+Plug 'tpope/vim-commentary'
+
+" VIM 中文文档
+Plug 'yianwillis/vimcdoc'
+
+" use osc32 to copy to system clipboard without gui
+Plug 'zhangzz21/vim-oscyank', {'branch': 'main'}
+
+" linux file command exec in vim : rm,mkdir,mv,find,sudo,wall,locate,cp,etc
+Plug 'tpope/vim-eunuch'
+
+" Better manage Vim sessions.
+Plug 'tpope/vim-obsession'
+
+" Run a diff on 2 directories.
+Plug 'will133/vim-dirdiff'
+
+" Run a diff on 2 blocks of text.
+Plug 'AndrewRadev/linediff.vim'
+
+" Better display unwanted whitespace.
+Plug 'ntpeters/vim-better-whitespace'
+
+" Automatically set tab by filetype
+Plug 'tpope/vim-sleuth'
+
+" Briefly highlight which text was yanked.
+Plug 'machakann/vim-highlightedyank'
+
+" Highlight which character to jump to when using horizontal movement keys.
+Plug 'unblevable/quick-scope'
+
+" Automatically show Vim's complete menu while typing.
+Plug 'vim-scripts/AutoComplPop'
+
+" Drastically improve insert mode performance in files with folds.
+Plug 'Konfekt/FastFold'
+
+" Show git diff changes in the left gutter.
+Plug 'mhinz/vim-signify'
+
+
 " " interactive window choose mode
 " Plug 't9md/vim-choosewin'
 "
@@ -514,14 +524,7 @@ call plug#begin()
 " " we can use this to search on some old sever without fzf/ag
 " Plug 'ctrlpvim/ctrlp.vim'
 "
-" " Vim LSP
-" " Plug 'prabirshrestha/vim-lsp'
-" " Plug 'mattn/vim-lsp-settings'
-" " Plug 'prabirshrestha/asyncomplete.vim'
 "
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-" Plug 'bling/vim-bufferline'
 "
 " Plug 'tpope/vim-surround'
 " Plug 'matze/vim-move'
@@ -544,7 +547,7 @@ call plug#end()
 """"""""""""""""""""
 "  #PLUGS INSTALL  "
 """"""""""""""""""""
-
+let g:mkdp_markdown_css = expand("~/github-markdown.css")
 
 "=========================PLUGINS CONFIG============================"
 "
@@ -737,11 +740,16 @@ let g:airline#extensions#tabline#enabled = 1
 " endfunction
 "
 " Display value of the char under the cursor, in hex
-" autocmd VimEnter * let g:airline_section_a = g:airline_section_a . '[%B]'
-" autocmd VimEnter * AirlineRefresh
+autocmd VimEnter * let g:airline_section_a = g:airline_section_a . '[%B]'
+autocmd VimEnter * AirlineRefresh
 
 
+" Trigger a highlight in the appropriate direction when pressing these keys.
+let g:qs_highlight_on_keys=['f', 'F', 't', 'T']
 
+" Only underline the highlights instead of using custom colors.
+highlight QuickScopePrimary gui=underline cterm=underline
+highlight QuickScopeSecondary gui=underline cterm=underline
 
 " some recommended plugins for c/c++: gtags,cscopetag
 "" vim 用 map 命令来映射快捷键,它前面可以加一些前缀来对应
