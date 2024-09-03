@@ -73,42 +73,6 @@ nnoremap <S-Tab> <C-w>w
 nnoremap <Leader>g gqap
 xnoremap <Leader>g gqa
 
-"""""""""""""""""""""""""""""""""""""END""""""""""""""""""""""""""""""""""""""
-
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                              key map command                               "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-
-" Short key for vim config
-nnoremap <leader>r :source ~/.vimrc<CR>
-nnoremap <Leader>er :tabnew $MYVIMRC<CR>
-nnoremap <Leader>d  :set mouse=a ttymouse=xterm2<cr>
-nnoremap <Leader>dd  :set mouse=<cr>
-
-" Short key to change display
-nnoremap <Leader>l :set list!<CR>
-
-
-
-vnoremap y ygv<Esc> " keep cursor position after visual yank
-"vnoremap <Leader>tc c<C-r>=system('~/.config/tcc', getreg('"'))[:-2]<CR>
-
-" Move  select lines up or down
-nnoremap <C-k> :m .-2<CR>==
-nnoremap <C-j> :m .+1<CR>==
-vnoremap <C-k> :m '<-2<CR>gv=gv
-vnoremap <C-j> :m '>+1<CR>gv=gv
-nnoremap <C-Up> :m .-2<CR>==
-nnoremap <C-Down> :m .+1<CR>==
-vnoremap <C-Up> :m '<-2<CR>gv=gv
-vnoremap <C-Down> :m '>+1<CR>gv=gv
-
-
-
 " Prevent x and the delete key from overriding what's in the clipboard.
 noremap x "_x
 noremap X "_x
@@ -117,20 +81,36 @@ noremap <Del> "_x
 " Prevent selecting and pasting from overwriting what you originally copied.
 xnoremap p pgvy
 
-" Copy the current buffer's absolute path to your clipboard.
-nnoremap cp :call OSCYank(expand("%:p"))<CR>
+" use <ins>  to toggle paste mode
+set pastetoggle=<insert>
 
-" The same as above but instead of acting on the whole file it will be
-" restricted to the previously visually selected range. You can do that by
-" pressing *, visually selecting the range you want it to apply to and then
-" press a key below to replace all instances of it in the current selection.
-xnoremap <Leader>r :s///g<Left><Left>
-xnoremap <Leader>rc :s///gc<Left><Left><Left>
+" make direction key can navigate in popup menu
+inoremap <expr> <Down> pumvisible() ? "<C-n>" :"<Down>"
+inoremap <expr> <Up> pumvisible() ? "<C-p>" : "<Up>"
+inoremap <expr> <Right> pumvisible() ? "<C-y>" : "<Right>"
+inoremap <expr> <Left> pumvisible() ? "<C-e>" : "<Left>"
+inoremap <expr> <CR> pumvisible() ? "<C-y>" :"<CR>"
 
-" Type a replacement term and press . to repeat the replacement again. Useful
-" for replacing a few instances of the term (comparable to multiple cursors).
-nnoremap <silent> <Leader>8 :let @/='\<'.expand('<cword>').'\>'<CR>cgn
-xnoremap <silent> <Leader>8 "sy:let @/=@s<CR>cgn
+"""""""""""""""""""""""""""""""""""""END""""""""""""""""""""""""""""""""""""""
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                              key map command                               "
+
+" Short key for vim config
+nnoremap <leader>r      :source ~/.vimrc<CR>
+nnoremap <Leader>er     :tabnew $MYVIMRC<CR>
+nnoremap <Leader>d      :set mouse=a ttymouse=xterm2<cr>
+nnoremap <Leader>dd     :set mouse=<cr>
+nnoremap <silent>       <leader>w :w<Cr>
+nnoremap <leader>q      :q<Cr>
+nnoremap <leader>e      :e!<Cr>
+nnoremap <silent>       <leader>n :let @/='\aSearchClear\a'<CR>:2match none<CR>
+nnoremap <Leader>l      :set list!<CR>
+nnoremap <leader>v      :set virtualedit=all<Cr>
+nnoremap <leader>vv     :set virtualedit=<Cr>
 
 " Toggle quickfix window.
 function! QuickFix_toggle()
@@ -144,175 +124,6 @@ function! QuickFix_toggle()
 
     copen
 endfunction
-
-nnoremap <silent> <Leader>c :call QuickFix_toggle()<CR>
-
-" Navigate the complete menu items like CTRL+n / CTRL+p would.
-inoremap <expr> <Down> pumvisible() ? "<C-n>" :"<Down>"
-inoremap <expr> <Up> pumvisible() ? "<C-p>" : "<Up>"
-
-" Select the complete menu item like CTRL+y would.
-inoremap <expr> <Right> pumvisible() ? "<C-y>" : "<Right>"
-inoremap <expr> <CR> pumvisible() ? "<C-y>" :"<CR>"
-
-" Cancel the complete menu item like CTRL+e would.
-inoremap <expr> <Left> pumvisible() ? "<C-e>" : "<Left>"
-
-
-" **************Custom key map*******************
-nnoremap <silent> <leader>w :w<Cr>
-nnoremap <leader>q :q<Cr>
-nnoremap <leader>e :e!<Cr>
-" 显示当前文件启用的高亮组设置
-" nnoremap <silent> <leader>h :so $VIMRUNTIME/syntax/hitest.vim<CR>
-" 去除搜索高亮和插入高亮
-nnoremap <silent> <leader>n :let @/=''<CR>:2match none<CR>
-
-
-
-nnoremap ee  $%i<space><space>return;<CR><Esc>
-nnoremap ss  :w<CR>:bn<CR>
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                            basic option setting                            "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-"in some terminal <alt> will be convert to <esc>
-"set <alt> key code to enable vim use alt key map
-execute "set <M-j> =\ej"    | "ê
-execute "set <M-k> =\ek"    | "ë
-execute "set <M-h> =\eh"    | "è
-execute "set <M-l> =\el"    | "ì
-
-set viminfo='100,<50,s10,h
-
-" Set paste mode toggle key
-set pastetoggle=<insert>
-
-" 去掉有关vi一致性模式,避免操作习惯上的局限.
-set nocompatible
-
-set updatetime=1000
-
-set maxmempattern=1000000000
-
-" change buffer without save
-set hidden
-
-set splitbelow
-set splitright
-set ttyfast
-
-set undodir=~/.vim/undodir
-set undofile
-set virtualedit=
-nnoremap <leader>v :set virtualedit=all<Cr>
-nnoremap <leader>vv :set virtualedit=<Cr>
-
-" Map command to delete file undofile
-command  RMundofile :execute  '!rm  ' . fnameescape(undofile(@%))
-"autocmd ShellCmdPost *  source $MYVIMRC
-
-" set swap file directory
-set directory=~/.vim/tmp
-
-" force vim pair match by %, like if/else
-runtime! macros/matchit.vim
-
-set foldcolumn=1
-set signcolumn=yes
-
-" 设置文件编码,主要是避免中文乱码.
-" 先注释,后续遇到中文乱码再打开
-" set encoding=utf-8
-
-" Paste mode donot change content from clipboard
-
-" history : how many lines of history VIM has to remember
-set history=2000
-
-" Color
-set t_Co=256
-
-" Syntax setting
-syntax on
-"syntax enable
-
-
-" Clipboard
-set clipboard=unnamed
-
-" Disable mouse in vim
-set mouse=""
-
-
-" 检测文件类型,并载入文件类型插件,
-" 为特定文件类型载入相关缩进文件
-filetype plugin indent on
-
-" For regular expressions turn magic on
-set magic
-
-" Change the terminal's title
-set title
-
-" Close vim warning bell and screen flash
-set novisualbell                " turn off visual bell
-set noerrorbells                " don't beep
-set visualbell t_vb=            " turn off error beep/flash
-set t_vb=
-set tm=300
-
-" 默认按下Esc后,需要等待1秒才生效,
-" 设置Esc超时时间为100ms,尽快生效
-set ttimeout
-set ttimeoutlen=100
-
-" modeline
-set modeline
-
-" Set backspace key work normally
-set backspace=indent,eol,start
-
-"========================== Basic autocommands======================"
-
-" Auto-resize splits when Vim gets resized.
-autocmd VimResized * wincmd =
-
-" Update a buffer's contents on focus if it changed outside of Vim.
-"au FocusGained,WinEnter * :checktime
-
-" Only show the cursor line in the active buffer.
-augroup CursorLine
-    au!
-    au VimEnter,WinEnter,BufWinEnter * setlocal cursorline |
-                \ setlocal cursorcolumn
-    au WinLeave * setlocal nocursorline | setlocal nocursorcolumn
-augroup END
-
-
-" Unset paste on InsertLeave.
-autocmd InsertLeave * silent! set nopaste
-
-" Make sure all types of requirements.txt files get syntax highlighting.
-autocmd BufNewFile,BufRead requirements*.txt set ft=python
-
-" Make sure .aliases, .bash_aliases and similar files get syntax highlighting.
-autocmd BufNewFile,BufRead .*aliases* set ft=sh
-
-" Auto move cursor to last exit position
-au BufReadPost * if line("'\"") > 0 | if line("'\"") <= line("$") | exe("norm '\"") | else |exe "norm $"| endif | endif
-
-" Make sure all types of requirements.txt files get syntax highlighting.
-autocmd BufNewFile,BufRead requirements*.txt set ft=python
-
-" Ensure all Markdown files don't get whitespace stripped but let it be visible.
-autocmd FileType markdown DisableStripWhitespaceOnSave
-
-" Ensure tabs don't get converted to spaces in Makefiles.
-autocmd FileType make setlocal noexpandtab
 
 " Add all TODO items to the quickfix list relative to where you opened Vim.
 function! s:todo() abort
@@ -334,8 +145,6 @@ function! s:todo() abort
   endif
 endfunction
 
-command! Todo call s:todo()
-
 " Profile Vim by running this command once to start it and again to stop it.
 function! s:profile(bang)
   if a:bang
@@ -348,24 +157,137 @@ function! s:profile(bang)
   endif
 endfunction
 
+nnoremap <silent> <Leader>c :call QuickFix_toggle()<CR>
+command! Todo call s:todo()
 command! -bang Profile call s:profile(<bang>0)
 
-"========================Set Vim Display============================"
+" Copy the current buffer's absolute path to your clipboard.
+nnoremap cp :call OSCYank(expand("%:p"))<CR>
 
-"Some vim ui settings
+
+" command to highlight select line
+nnoremap <silent> <leader>h :call matchadd('MyLineHi', '\%'.line('.').'l')<cr>
+nnoremap <silent> <leader>hh :call clearmatches()<cr>
+
+
+
+
+
+" keep cursor position after visual yank
+" vnoremap y ygv<Esc>
+
+" nnoremap <silent> <leader>h :so $VIMRUNTIME/syntax/hitest.vim<CR>
+
+" Move  select lines up or down
+" nnoremap <C-k> :m .-2<CR>==
+" nnoremap <C-j> :m .+1<CR>==
+" vnoremap <C-k> :m '<-2<CR>gv=gv
+" vnoremap <C-j> :m '>+1<CR>gv=gv
+" nnoremap <C-Up> :m .-2<CR>==
+" nnoremap <C-Down> :m .+1<CR>==
+" vnoremap <C-Up> :m '<-2<CR>gv=gv
+" vnoremap <C-Down> :m '>+1<CR>gv=gv
+
+" The same as above but instead of acting on the whole file it will be
+" restricted to the previously visually selected range. You can do that by
+" pressing *, visually selecting the range you want it to apply to and then
+" press a key below to replace all instances of it in the current selection.
 "
+" xnoremap <Leader>r :s///g<Left><Left>
+" xnoremap <Leader>rc :s///gc<Left><Left><Left>
+
+" Type a replacement term and press . to repeat the replacement again. Useful
+" for replacing a few instances of the term (comparable to multiple cursors).
+"
+" nnoremap <silent> <Leader>8 :let @/='\<'.expand('<cword>').'\>'<CR>cgn
+" xnoremap <silent> <Leader>8 "sy:let @/=@s<CR>cgn
+
+
+"""""""""""""""""""""""""""""""""""""END""""""""""""""""""""""""""""""""""""""
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                            basic option setting                            "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+"set <alt> key code to enable vim use alt key map
+"
+"in some terminal <alt> will be convert to <esc>
+execute "set <M-j> =\ej"    | "ê
+execute "set <M-k> =\ek"    | "ë
+execute "set <M-h> =\eh"    | "è
+execute "set <M-l> =\el"    | "ì
+
+set viminfo='100,<50,s10,h
+set backspace=indent,eol,start
+set history=2000
+set hidden        "enable change buffer without saving
+set splitbelow
+set splitright
+set mouse=""
+set ttyfast
+set nocompatible
+set modeline
+set t_Co=256
+set magic         "default regular expr mode
+syntax on
+filetype plugin indent on
+" set virtualedit=all
+" set encoding=utf-8
+" set clipboard=unnamed
+
+set updatetime=1000
+set maxmempattern=1000000000
+set novisualbell                " turn off visual bell
+set noerrorbells                " don't beep
+set visualbell t_vb=            " turn off error beep/flash
+set t_vb=
+set tm=300
+
+set ttimeout        "enable escape key code/map overtime
+set ttimeoutlen=100
+
+set undofile
+set undodir=~/.vim/undodir
+set directory=~/.vim/tmp " set swap file directory
+command  RMundofile :execute  '!rm  ' . fnameescape(undofile(@%))
+
+
+let &t_SH = "\e[3 q"
+let &t_SI = "\e[0 q"
+let &t_EI = "\e[0 q"
+
+if (has("termguicolors"))
+  " https://github.com/vim/vim/issues/993#issuecomment-255651605
+  " let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  " let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+  " set termguicolors
+endif
+
+" force vim pair match by %, like if/else
+runtime! macros/matchit.vim
+
+
+""""""""""""
+"  Vim Ui  "
+""""""""""""
+
+" 1=启动显示状态行, 2=总是显示状态行.
+set laststatus=2
+set foldcolumn=1
+set signcolumn=yes
 set number
-"set relativenumber     " show relative number
+" set relativenumber     " show relative number
 set nowrap              "display too long line on one line
 set linebreak           "this help wrap option display better
 set showcmd             "show vim input cmd keys
 set showmode            "show vim mode
 set showmatch           "show the corresponding parentheses
+set wildmenu            "enable command-line completion
 set ruler
-
-" 使用Tab键补全时,在状态栏显示匹配的列表,
-" 方便查看都有哪些命令符合补全条件.
-set wildmenu
+set scrolloff=5
 
 " cursorlineopt=number只高亮行号部分,不影响正文内容
 " 的显示. 在其他容易看到光标的终端上可以去掉这两个设置.
@@ -374,96 +296,84 @@ set cursorline
 set cursorcolumn
 "
 
-" Keep some lines with screen top and bottom when scrolling
-set scrolloff=7
-
-" 针对特定类型的代码文件,设置显示Tab键和行尾空格以便在
-" 开关list来动态切换显示.
-autocmd FileType c,cpp,java,xml setlocal list | set listchars=tab:>~,trail:.
-
-" 1=启动显示状态行, 2=总是显示状态行.
-set laststatus=2
-
-" 设置状态行显示的内容. %F: 显示当前文件的完整路径.
-" %r: 如果readonly,会显示[RO]
-" %B: 显示光标下字符的编码值,十六进制.
-" %l:光标所在的行号. %v:光标所在的虚拟列号.
-" %P: 显示当前内容在整个文件中的百分比.
-" %H和%M是strftime()函数的参数,获取时间.
-" set statusline+=%F%r%y%m\ [HEX=%B][%l,%v,%P]\ %{strftime(\"%H:%M\")}
-
-
-"function! s:statusline_expr()
-"  let mod = "%{&modified ? '[+] ' : !&modifiable ? '[x] ' : ''}"
-"  let ro  = "%{&readonly ? '[RO] ' : ''}"
-"  let ft  = "%{len(&filetype) ? '['.&filetype.'] ' : ''}"
-"  let fug = "%{exists('g:loaded_fugitive') ? fugitive#statusline() : ''}"
-"  let sep = ' %= '
-"  let pos = ' %-12(%l : %c%V%) '
-"  let pct = ' %P'
-"
-"  return '[%n] %f %<'.mod.ro.ft.fug.sep.pos.'%*'.pct
-"endfunction
-"
-"let &statusline = s:statusline_expr()
-
-"==================Vim Indent and Search Setting===================="
-" Set tab display 4 spaces
+" tab setting
 set tabstop=4
-
-" Auto convert tab to spaces
 set expandtab
-
-" Set auto indent 4 spaces when using </>
 set shiftwidth=4
-
-" Open auto indent
 set autoindent
-
-" 设置softtabstop有一个好处是可以用Backspace键来一次
-" 删除4个空格. softtabstop的值为负数,会使用shiftwidth
-" 的值,两者保持一致,方便统一缩进.
 set softtabstop=-1
 
-" Automatically ignore case when searching
+" searching setting
 set ignorecase
-
-" 高亮显示所有搜索到的内容.后面用map映射
-" 快捷键来方便关闭当前搜索的高亮.
 set hlsearch
-
-" 光标立刻跳转到搜索到内容
 set incsearch
-
-" 搜索到最后匹配的位置后,再次搜索不回到第一个匹配处
 set wrapscan
 
 
+"""""""""""""""""""""""""""""""""""""END""""""""""""""""""""""""""""""""""""""
 
-"=====================Vim Display Color Setting====================="
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  autocmd                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+autocmd FileType c,cpp,java,xml setlocal list | set listchars=tab:>~,trail:.
+" Auto-resize splits when Vim gets resized.
+autocmd VimResized * wincmd =
+
+" Only show the cursor line in the active buffer.
+augroup CursorLine
+    au!
+    au VimEnter,WinEnter,BufWinEnter * setlocal cursorline |
+                \ setlocal cursorcolumn
+    au WinLeave * setlocal nocursorline | setlocal nocursorcolumn
+augroup END
+
+" Unset paste on InsertLeave.
+autocmd InsertLeave * silent! set nopaste
+
+" Make sure all types of requirements.txt files get syntax highlighting.
+autocmd BufNewFile,BufRead requirements*.txt set ft=python
+
+" Make sure .aliases, .bash_aliases and similar files get syntax highlighting.
+autocmd BufNewFile,BufRead .*aliases* set ft=sh
+
+" Auto move cursor to last exit position
+au BufReadPost * if line("'\"") > 0 | if line("'\"") <= line("$") |
+            \exe("norm '\"") | else |exe "norm $"| endif | endif
+
+" Make sure all types of requirements.txt files get syntax highlighting.
+autocmd BufNewFile,BufRead requirements*.txt set ft=python
+
+" Ensure all Markdown files don't get whitespace stripped but let it be visible.
+autocmd FileType markdown DisableStripWhitespaceOnSave
+
+" Ensure tabs don't get converted to spaces in Makefiles.
+autocmd FileType make setlocal noexpandtab
+
+
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                           custome color settings                           "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 "
 " 设置颜色主题,适用于黑色背景.
 "colorscheme slate
 
 " ColorScheme  example
 "hi CursorLine   cterm=NONE ctermbg=grey ctermfg=green guibg=NONE guifg=NONE
-"
+
 " Custome Highlight Group
 hi MyTabSpace cterm=none ctermfg=none ctermbg=none
 hi MyInsertContent cterm=none ctermfg=green ctermbg=darkgrey
 hi MyEchoMes cterm=none ctermfg=red ctermbg=none
 hi MyLineHi cterm=none ctermfg=darkgrey ctermbg=red
 
-" set vim messege highlight
-echohl MyEchoMes
-nnoremap <silent> <leader>h :call matchadd('MyLineHi', '\%'.line('.').'l')<cr>
-nnoremap <silent> <leader>hh :call clearmatches()<cr>
-
-" 将tab字符和空格的颜色组为MyTabSpace,
-" match MyTabSpace /\t\| /
-" call matchadd('MyTabSpace', ' ', 1000)
-
-
+" Vim Highlight Group
 highlight ColorColumn ctermbg=238
 hi CursorColumn   cterm=none ctermbg=238 ctermfg=none
 hi CursorLine   cterm=nocombine ctermbg=238 ctermfg=none
@@ -474,27 +384,24 @@ highlight Folded ctermfg=red ctermbg=none
 highlight FoldColumn ctermfg=yellow ctermbg=NONE
 highlight SignColumn ctermbg=none ctermfg=LightGrey
 
-"********* auto highlight the last insert context ******
-autocmd InsertEnter *   let b:CursorLineBeforeIns = line(".") |
-            \  let b:CursorColBeforeIns = col(".")
+" set vim messege highlight
+echohl MyEchoMes
 
-autocmd InsertLeave *   let b:CursorLineAfterIns = line(".")  |
-            \  let b:CursorColAfterIns = col(".")
-
-" autocmd InsertLeave * echom "INSERT: '" . @. . "'" |
-"             \ execute '2match MyInsertContent ' . '/\%' . b:CursorLineBeforeIns . 'l\%' . b:CursorColBeforeIns .
-"             \ 'c\(.\|\n\)*\%' . b:CursorLineAfterIns . 'l\%' . b:CursorColAfterIns .'c./'
+" 将tab字符和空格的颜色组为MyTabSpace,
+" match MyTabSpace /\t\| /
+" call matchadd('MyTabSpace', ' ', 1000)
 
 
 
 
-" autocmd BufEnter * silent!  2match none |
-"             \ silent! execute '2match MyInsertContent ' . '/\%' . b:CursorLineBeforeIns . 'l\%' . b:CursorColBeforeIns .
-"             \ 'c\(.\|\n\)*\%' . b:CursorLineAfterIns . 'l\%' . b:CursorColAfterIns .'c./'
 
-"===========================Vim Plugins============================="
 
-" check plug.vim ,if no plug.vim ,install it
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  VIM PLUG                                  "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+" check plug.vim ,if no plug.vim ,install plug.vim
 if !filereadable(expand("~/.vim/autoload/plug.vim"))
     " 如果不存在，使用 curl 下载
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -508,128 +415,129 @@ endif
 """"""""""""""""""""
 call plug#begin()
 
-" VIM 中文文档
-Plug 'yianwillis/vimcdoc'
-
-"List your plugins here
-Plug 'zhangzz21/vim-oscyank', {'branch': 'main'} "set vim OSC52 clipboard support
-
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
-" Better manage Vim sessions.
-Plug 'tpope/vim-obsession'
-
-"file zoom
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-
-" Pass focus events from tmux to Vim (useful for autoread and linting tools).
-Plug 'tmux-plugins/vim-tmux-focus-events'
-
-" Navigate and manipulate files in a tree view.
-Plug 'lambdalisue/fern.vim'
-Plug 'lambdalisue/fern-mapping-mark-children.vim'
-
-" Helpers for moving and manipulating files / directories.
-Plug 'tpope/vim-eunuch'
-
-" Run a diff on 2 directories.
-Plug 'will133/vim-dirdiff'
-
-" Run a diff on 2 blocks of text.
-Plug 'AndrewRadev/linediff.vim'
-
-" Briefly highlight which text was yanked.
-Plug 'machakann/vim-highlightedyank'
-
-" Highlight which character to jump to when using horizontal movement keys.
-Plug 'unblevable/quick-scope'
-
-" Modify * to also work with visual selections.
-" use */# to search select test in visual mode
-Plug 'nelstrom/vim-visual-star-search'
-
-" Handle multi-file find and replace.
-" use grep/ag/etc to search file in quickfix
-Plug 'mhinz/vim-grepper'
-
-" Better display unwanted whitespace.
-Plug 'ntpeters/vim-better-whitespace'
-
-" Toggle comments in various ways.
-Plug 'tpope/vim-commentary'
-
-" Automatically set 'shiftwidth' + 'expandtab' (indention) based on file type.
-Plug 'tpope/vim-sleuth'
-
-" A number of useful motions for the quickfix list, pasting and more.
-Plug 'tpope/vim-unimpaired'
-
-" Drastically improve insert mode performance in files with folds.
-Plug 'Konfekt/FastFold'
-
-" Show git file changes in the gutter.
-Plug 'mhinz/vim-signify'
-
-" A git wrapper.
-Plug 'tpope/vim-fugitive'
-
-" A bunch of useful language related snippets (ultisnips is the engine).
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-
-" Automatically show Vim's complete menu while typing.
-Plug 'vim-scripts/AutoComplPop'
-
-" Aligning text
-Plug 'godlygeek/tabular'
-
-" If you don't have nodejs and yarn  use pre build
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() },
-                \ 'for': ['markdown', 'vim-plug']}
-
-" interactive window choose mode
-Plug 't9md/vim-choosewin'
-
-" visual-block, but the plugin works mostly from normal mode.
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-
-" auto complete path pair char ,etc []/()
-Plug 'Raimondi/delimitMate'
-
-" use tab to complete word in insert mode
-Plug 'ervandew/supertab'
-
-" ☆ auto check syntax error based LSP realtimely
-Plug 'dense-analysis/ale'
-
-" fuzzy search like fzf, but no dependency ,only write by vimscript
-" we can use this to search on some old sever without fzf/ag
-Plug 'ctrlpvim/ctrlp.vim'
-
-" Vim LSP
-" Plug 'prabirshrestha/vim-lsp'
-" Plug 'mattn/vim-lsp-settings'
-" Plug 'prabirshrestha/asyncomplete.vim'
-
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'bling/vim-bufferline'
-
-Plug 'tpope/vim-surround'
-Plug 'matze/vim-move'
-
-"FUNNY VIM Draw ascii art
-Plug 'vim-scripts/DrawIt'
-
-"Plug 'inkarkat/vim-mark'
-Plug 'idbrii/vim-hiinterestingword'
-
-
-Plug 'coderifous/textobj-word-column.vim'
-Plug 'azabiong/vim-highlighter'
-
-Plug 'guns/xterm-color-table.vim'
+" " VIM 中文文档
+" Plug 'yianwillis/vimcdoc'
+"
+" "List your plugins here
+" Plug 'zhangzz21/vim-oscyank', {'branch': 'main'} "set vim OSC52 clipboard support
+"
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim'
+"
+" " Better manage Vim sessions.
+" Plug 'tpope/vim-obsession'
+"
+" "file zoom
+" Plug 'junegunn/goyo.vim'
+" Plug 'junegunn/limelight.vim'
+"
+" " Pass focus events from tmux to Vim (useful for autoread and linting tools).
+" Plug 'tmux-plugins/vim-tmux-focus-events'
+"
+" " Navigate and manipulate files in a tree view.
+" Plug 'lambdalisue/fern.vim'
+" Plug 'lambdalisue/fern-mapping-mark-children.vim'
+"
+" " Helpers for moving and manipulating files / directories.
+" Plug 'tpope/vim-eunuch'
+"
+" " Run a diff on 2 directories.
+" Plug 'will133/vim-dirdiff'
+"
+" " Run a diff on 2 blocks of text.
+" Plug 'AndrewRadev/linediff.vim'
+"
+" " Briefly highlight which text was yanked.
+" Plug 'machakann/vim-highlightedyank'
+"
+" " Highlight which character to jump to when using horizontal movement keys.
+" Plug 'unblevable/quick-scope'
+"
+" " Modify * to also work with visual selections.
+" " use */# to search select test in visual mode
+" Plug 'nelstrom/vim-visual-star-search'
+"
+" " Handle multi-file find and replace.
+" " use grep/ag/etc to search file in quickfix
+" Plug 'mhinz/vim-grepper'
+"
+" " Better display unwanted whitespace.
+" Plug 'ntpeters/vim-better-whitespace'
+"
+" " Toggle comments in various ways.
+" Plug 'tpope/vim-commentary'
+"
+" " Automatically set 'shiftwidth' + 'expandtab' (indention) based on file type.
+" Plug 'tpope/vim-sleuth'
+"
+" " A number of useful motions for the quickfix list, pasting and more.
+" Plug 'tpope/vim-unimpaired'
+"
+" " Drastically improve insert mode performance in files with folds.
+" Plug 'Konfekt/FastFold'
+"
+" " Show git file changes in the gutter.
+" Plug 'mhinz/vim-signify'
+"
+" " A git wrapper.
+" Plug 'tpope/vim-fugitive'
+"
+" " A bunch of useful language related snippets (ultisnips is the engine).
+" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"
+" " Automatically show Vim's complete menu while typing.
+" Plug 'vim-scripts/AutoComplPop'
+"
+" " Aligning text
+" Plug 'godlygeek/tabular'
+"
+" " If you don't have nodejs and yarn  use pre build
+" Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() },
+"                 \ 'for': ['markdown', 'vim-plug']}
+"
+" " interactive window choose mode
+" Plug 't9md/vim-choosewin'
+"
+" " visual-block, but the plugin works mostly from normal mode.
+" Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+"
+" " auto complete path pair char ,etc []/()
+" Plug 'Raimondi/delimitMate'
+"
+" " use tab to complete word in insert mode
+" Plug 'ervandew/supertab'
+"
+" " ☆ auto check syntax error based LSP realtimely
+" Plug 'dense-analysis/ale'
+"
+" " fuzzy search like fzf, but no dependency ,only write by vimscript
+" " we can use this to search on some old sever without fzf/ag
+" Plug 'ctrlpvim/ctrlp.vim'
+"
+" " Vim LSP
+" " Plug 'prabirshrestha/vim-lsp'
+" " Plug 'mattn/vim-lsp-settings'
+" " Plug 'prabirshrestha/asyncomplete.vim'
+"
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+" Plug 'bling/vim-bufferline'
+"
+" Plug 'tpope/vim-surround'
+" Plug 'matze/vim-move'
+"
+" "FUNNY VIM Draw ascii art
+" Plug 'vim-scripts/DrawIt'
+"
+" "Plug 'inkarkat/vim-mark'
+" Plug 'idbrii/vim-hiinterestingword'
+"
+"
+" Plug 'coderifous/textobj-word-column.vim'
+" Plug 'azabiong/vim-highlighter'
+"
+" Plug 'guns/xterm-color-table.vim'
+" Plug 'szw/vim-maximizer'
 
 call plug#end()
 
@@ -804,6 +712,36 @@ let g:airline_powerline_fonts = 1
 " let g:airline_statusline_ontop=1
 let g:airline_theme='bubblegum'
 
+let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#left_sep = ' '
+" let g:airline#extensions#tabline#left_alt_sep = '|'
+" let g:airline_statusline_ontop=1
+" let g:airline_highlighting_cache = 1
+
+
+" Customize airline show text sample
+" function! AccentDemo()
+"   let keys = ['a','b','c','d','e','f','g','h']
+"   for k in keys
+"     call airline#parts#define_text(k, k)
+"   endfor
+"   call airline#parts#define_accent('a', 'red')
+"   call airline#parts#define_accent('b', 'green')
+"   call airline#parts#define_accent('c', 'blue')
+"   call airline#parts#define_accent('d', 'yellow')
+"   call airline#parts#define_accent('e', 'orange')
+"   call airline#parts#define_accent('f', 'purple')
+"   call airline#parts#define_accent('g', 'bold')
+"   call airline#parts#define_accent('h', 'italic')
+"   let g:airline_section_a = airline#section#create(keys)
+" endfunction
+"
+" Display value of the char under the cursor, in hex
+" autocmd VimEnter * let g:airline_section_a = g:airline_section_a . '[%B]'
+" autocmd VimEnter * AirlineRefresh
+
+
+
 
 " some recommended plugins for c/c++: gtags,cscopetag
 "" vim 用 map 命令来映射快捷键,它前面可以加一些前缀来对应
@@ -840,3 +778,42 @@ let g:airline_theme='bubblegum'
 "   Ps = 6  -> steady bar (xterm).
 " let &t_SI = "\e[6 q"
 " let &t_EI = "\e[2 q"
+" 设置状态行显示的内容. %F: 显示当前文件的完整路径.
+" %r: 如果readonly,会显示[RO]
+" %B: 显示光标下字符的编码值,十六进制.
+" %l:光标所在的行号. %v:光标所在的虚拟列号.
+" %P: 显示当前内容在整个文件中的百分比.
+" %H和%M是strftime()函数的参数,获取时间.
+" set statusline+=%F%r%y%m\ [HEX=%B][%l,%v,%P]\ %{strftime(\"%H:%M\")}
+
+
+"function! s:statusline_expr()
+"  let mod = "%{&modified ? '[+] ' : !&modifiable ? '[x] ' : ''}"
+"  let ro  = "%{&readonly ? '[RO] ' : ''}"
+"  let ft  = "%{len(&filetype) ? '['.&filetype.'] ' : ''}"
+"  let fug = "%{exists('g:loaded_fugitive') ? fugitive#statusline() : ''}"
+"  let sep = ' %= '
+"  let pos = ' %-12(%l : %c%V%) '
+"  let pct = ' %P'
+"
+"  return '[%n] %f %<'.mod.ro.ft.fug.sep.pos.'%*'.pct
+"endfunction
+"
+"let &statusline = s:statusline_expr()
+"********* auto highlight the last insert context ******
+"autocmd InsertEnter *   let b:CursorLineBeforeIns = line(".") |
+"            \  let b:CursorColBeforeIns = col(".")
+"
+"autocmd InsertLeave *   let b:CursorLineAfterIns = line(".")  |
+"            \  let b:CursorColAfterIns = col(".")
+"
+" autocmd InsertLeave * echom "INSERT: '" . @. . "'" |
+"             \ execute '2match MyInsertContent ' . '/\%' . b:CursorLineBeforeIns . 'l\%' . b:CursorColBeforeIns .
+"             \ 'c\(.\|\n\)*\%' . b:CursorLineAfterIns . 'l\%' . b:CursorColAfterIns .'c./'
+
+
+
+
+" autocmd BufEnter * silent!  2match none |
+"             \ silent! execute '2match MyInsertContent ' . '/\%' . b:CursorLineBeforeIns . 'l\%' . b:CursorColBeforeIns .
+"             \ 'c\(.\|\n\)*\%' . b:CursorLineAfterIns . 'l\%' . b:CursorColAfterIns .'c./'
