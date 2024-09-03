@@ -177,6 +177,10 @@ nnoremap <silent> <leader>h :call matchadd('MyLineHi', '\%'.line('.').'l')<cr>
 nnoremap <silent> <leader>hh :call clearmatches()<cr>
 
 
+" direct operate other win without switching
+nnoremap <M-n>    :call win_execute(win_getid(winnr('j')), "normal! 5j")<cr>
+
+
 
 
 
@@ -225,7 +229,10 @@ execute "set <M-j> =\ej"    | "ê
 execute "set <M-k> =\ek"    | "ë
 execute "set <M-h> =\eh"    | "è
 execute "set <M-l> =\el"    | "ì
-" vim
+execute "set <M-e> =\ee"    | "
+execute "set <M-n> =\en"    | "
+execute "set <M-m> =\em"    | "ê
+
 
 set keywordprg=man " this will be overwrite by setlocal for every ft
 set viminfo='100,<50,s10,h
@@ -449,6 +456,8 @@ endif
 " " If you don't have nodejs and yarn  use pre build
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() },
 "       \'for': ['markdown', 'vim-plug']}
+" " interactive window choose mode
+" Plug 't9md/vim-choosewin'
 """"""""""""""""""""
 "  #PLUGS INSTALL  "
 """"""""""""""""""""
@@ -504,10 +513,6 @@ Plug 'Konfekt/FastFold'
 " Show git diff changes in the left gutter.
 Plug 'mhinz/vim-signify'
 
-
-" " interactive window choose mode
-" Plug 't9md/vim-choosewin'
-"
 " " visual-block, but the plugin works mostly from normal mode.
 " Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 "
