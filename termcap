@@ -40,3 +40,46 @@ t_K1 <kHome>     ^[[1;*~   t_KC <k0>        ^[O*p     t_PE <PasteEnd>  ^[[201~  
 [<0;1;1M]
 [<0;1;1M]
 [<16;1;1M]
+
+/home/zhangzz/.vim/plugged/vimcdoc/doc/term.cnx
+
+--- Terminal codes ---
+  t_AU=^[[58;5;%dm    t_ce=^[[K           t_db=               t_fs=^G             t_ks=^[[?1h^[=      t_nd=^[[C           t_RK=^[[?4m         t_Sf=               t_ST=^[[22;2t       t_ue=^[[m           t_VS=^[[?12l
+  t_AL=^[[%p1%dL      t_Ce=               t_DL=^[[%p1%dM      t_fd=^[[?1004l      t_le=^H             t_op=^[[39;49m      t_RS=^[P$q q^[\     t_SH=^[[3 q         t_Te=^[[29m         t_us=^[[4m          t_vs=^[[?12h
+  t_al=^[[L           t_cl=^[[H^[[2J      t_dl=^[[M           t_fe=^[[?1004h      t_mb=^[[5m          t_RF=^[]10;?^G      t_RT=^[[23;2t       t_SI=^[[0 q         t_TE=^[[>4;m        t_Us=               t_xn=y
+  t_bc=               t_Co=256            t_ds=               t_GP=^[[13t         t_md=^[[1m          t_RB=^[]11;?^G      t_RV=^[[>c          t_Si=^[[22;1t       t_TI=^[[>4;2m       t_ut=y              t_xs=
+  t_BE=^[[?2004h      t_CS=               t_Ds=               t_IE=^G             t_me=^[[m           t_RC=^[[?12$p       t_Sb=               t_so=^[[7m          t_Ts=^[[9m          t_vb=               t_ZH=^[[3m
+  t_BD=^[[?2004l      t_CV=               t_EC=^G             t_IS=^[]1;          t_mr=^[[7m          t_RI=^[[%p1%dC      t_SC=^[]12;         t_SR=               t_ts=^[]2;          t_ve=^[[?25h        t_ZR=^[[23m
+  t_cd=^[[J           t_da=               t_EI=^[[0 q         t_ke=^[[?1l^[>      t_ms=y              t_Ri=^[[23;1t       t_se=^[[27m         t_sr=^[M            t_u7=^[[6n          t_vi=^[[?25l
+  t_AB=^[[%?%p1%{8}%<%t4%p1%d%e%p1%{16}%<%t10%p1%{8}%-%d%e48;5;%p1%d%;m
+  t_AF=^[[%?%p1%{8}%<%t3%p1%d%e%p1%{16}%<%t9%p1%{8}%-%d%e38;5;%p1%d%;m
+  t_cm=^[[%i%p1%d;%p2%dH
+  t_Cs=^[]12;%p1%s^G
+  t_cs=^[[%i%p1%d;%p2%dr
+  t_te=^[[?1049l^[[23;0;0t
+  t_ti=^[[?1049h^[[22;0;0t
+  t_WP=^[[3;%p1%d;%p2%dt
+  t_WS=^[[8;%p1%d;%p2%dt
+  t_XM=^[[?1006;1000%?%p1%{1}%=%th%el%;
+  t_8f=^[[38;2;%lu;%lu;%lum
+  t_8b=^[[48;2;%lu;%lu;%lum
+  t_8u=^[[58;2;%lu;%lu;%lum
+--- Terminal keys ---
+t_#2 <S-Home>    ^[[1;2H   t_K9 <kMultiply> ^[O*j     t_k2 <F2>        ^[[12;*~  t_kh <Home>      ^[[@;*H        <Ì>        ^[L            <â>        ^[b            <ò>        ^[r            <xHome>     ^[O*H
+t_#4 <S-Left>    ^[[1;2D   t_KA <kEnter>    ^[O*M     t_k3 <F3>        ^[[13;*~  t_kl <Left>      ^[O*D          <Í>        ^[M            <ã>        ^[c            <ó>        ^[s            <zHome>     ^[[7;*~
+t_%1 <Help>      ^[[28;*~  t_KB <kPoint>    ^[O*n     t_k4 <F4>        ^[[14;*~  t_kr <Right>     ^[O*C          <Î>        ^[N            <ä>        ^[d            <ô>        ^[t            <xUp>       ^[[@;*A
+t_%i <S-Right>   ^[[1;2C   t_KC <k0>        ^[O*p     t_k5 <F5>        ^[[15;*~  t_ku <Up>        ^[O*A          <Ï>        ^[O            <å>        ^[e            <õ>        ^[u            <xDown>     ^[[@;*B
+t_&8 <Undo>      ^[[26;*~  t_KD <k1>        ^[O*q     t_k6 <F6>        ^[[17;*~       <SgrMouse>  ^[[<*M         <Ð>        ^[P            <æ>        ^[f            <ö>        ^[v            <xLeft>     ^[[@;*D
+t_*7 <S-End>     ^[[1;2F   t_KE <k2>        ^[O*r     t_k7 <F7>        ^[[18;*~       <Á>        ^[A            <Ñ>        ^[Q            <ç>        ^[g            <÷>        ^[w            <xRight>    ^[[@;*C
+t_@7 <End>       ^[[@;*F   t_KF <k3>        ^[O*s     t_k8 <F8>        ^[[19;*~       <Â>        ^[B            <Ò>        ^[R            <è>        ^[h            <ø>        ^[x            <kDel>      ^[[3;*~
+t_F1 <F11>       ^[[23;*~  t_KG <k4>        ^[O*t     t_k9 <F9>        ^[[20;*~       <Ã>        ^[C            <Ó>        ^[S            <é>        ^[i            <ù>        ^[y            <FocusGained> ^[[I
+t_F2 <F12>       ^[[24;*~  t_KH <k5>        ^[O*u     t_k; <F10>       ^[[21;*~       <Ä>        ^[D            <Ô>        ^[T            <ê>        ^[j            <ú>        ^[z            <FocusLost> ^[[O
+t_K1 <kHome>     ^[[1;*~   t_KI <k6>        ^[O*v     t_kB <S-Tab>     ^[[Z           <Å>        ^[E            <Õ>        ^[U            <ë>        ^[k            <Mouse>     ^[[M
+t_K3 <kPageUp>   ^[Oy      t_KJ <k7>        ^[O*w     t_kD <Del>       ^[[3;*~        <Æ>        ^[F            <Ö>        ^[V            <ì>        ^[l            <xF1>       ^[O*P
+t_K4 <kEnd>      ^[[4;*~   t_KK <k8>        ^[O*x     t_kI <Insert>    ^[[2;*~        <Ç>        ^[G            <×>        ^[W            <í>        ^[m            <xF2>       ^[O*Q
+t_K5 <kPageDown> ^[Os      t_KL <k9>        ^[O*y     t_kN <PageDown>  ^[[6;*~        <È>        ^[H            <Ø>        ^[X            <î>        ^[n            <xF3>       ^[O*R
+t_K6 <kPlus>     ^[O*k     t_PE <PasteEnd>  ^[[201~   t_kP <PageUp>    ^[[5;*~        <É>        ^[I            <Ù>        ^[Y            <ï>        ^[o            <xF4>       ^[O*S
+t_K7 <kMinus>    ^[O*m     t_PS <PasteStart> ^[[200~  t_kb <BS>        ^?             <Ê>        ^[J            <Ú>        ^[Z            <ð>        ^[p            <xEnd>      ^[O*F
+t_K8 <kDivide>   ^[O*o     t_k1 <F1>        \eOP      t_kd <Down>      ^[O*B          <Ë>        ^[K            <á>        ^[a            <ñ>        ^[q            <zEnd>      ^[[8;*~
+     <SgrMouseRelease> ^[[<*m
+/home/zhangzz/.vim/plugged/vimcdoc/doc/term.cnx

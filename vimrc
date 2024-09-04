@@ -53,6 +53,8 @@ nnoremap <silent> g* g*zz
 nnoremap <silent> <c-o> <c-o>zz
 nnoremap <silent> <c-i> <c-i>zz
 " Seamlessly treat visual lines as actual lines when moving around.
+noremap 1 !
+noremap ! 1
 noremap 0 ^
 noremap ^ 0
 noremap j gj
@@ -62,7 +64,7 @@ noremap K 5gk
 noremap gj J
 noremap gk K " 'K' can call shell cmd,this have many funny use by 'keywordprg'
 noremap r <c-r>
-noremap <c-r> r
+" noremap <c-r> r
 noremap <Down> gj
 noremap <Up> gk
 inoremap <Down> <C-o>gj
@@ -179,6 +181,7 @@ nnoremap <silent> <leader>hh :call clearmatches()<cr>
 
 " direct operate other win without switching
 nnoremap <M-n>    :call win_execute(win_getid(winnr('j')), "normal! 5j")<cr>
+nnoremap <leader>zz    :MaximizerToggle<cr>
 
 
 
@@ -221,18 +224,19 @@ nnoremap <M-n>    :call win_execute(win_getid(winnr('j')), "normal! 5j")<cr>
 "                            basic #option setting                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" map a-zA-Z key code for some terminal emulator
+" some <alt-'*'> may not valid because system key map
+function! MySetAltKeyCode()
+    for l:i in range(0, 25)
+        " áâãäåæçèéêëìîíïðñòóôõö
+        execute 'set <M-' . nr2char(l:i + 97) . '>=' . nr2char(l:i + 97)
+        "  ÁÂÃ ÅÆÇÈÉÊË
+        execute 'set <M-' . nr2char(l:i + 65) . '>=' . nr2char(l:i + 65)
+    endfor
+endfunction
 
-"set <alt> key code to enable vim use alt key map
-"
-"in some terminal <alt> will be convert to <esc>
-execute "set <M-j> =\ej"    | "ê
-execute "set <M-k> =\ek"    | "ë
-execute "set <M-h> =\eh"    | "è
-execute "set <M-l> =\el"    | "ì
-execute "set <M-e> =\ee"    | "
-execute "set <M-n> =\en"    | "
-execute "set <M-m> =\em"    | "ê
-
+let &t_k1="\eOP"
+call MySetAltKeyCode()
 
 set keywordprg=man " this will be overwrite by setlocal for every ft
 set viminfo='100,<50,s10,h
@@ -449,8 +453,6 @@ endif
 " " A git wrapper.
 " Plug 'tpope/vim-fugitive'
 "
-" " A bunch of useful language related snippets (ultisnips is the engine).
-" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 " " Aligning text
 " Plug 'godlygeek/tabular'
 " " If you don't have nodejs and yarn  use pre build
@@ -504,8 +506,11 @@ Plug 'machakann/vim-highlightedyank'
 " Highlight which character to jump to when using horizontal movement keys.
 Plug 'unblevable/quick-scope'
 
-" Automatically show Vim's complete menu while typing.
-Plug 'vim-scripts/AutoComplPop'
+" Automatically show popup menu ,this may be annoy,default close it
+" Plug 'vim-scripts/AutoComplPop'
+
+" use tab to complete word in insert mode
+Plug 'ervandew/supertab'
 
 " Drastically improve insert mode performance in files with folds.
 Plug 'Konfekt/FastFold'
@@ -513,39 +518,39 @@ Plug 'Konfekt/FastFold'
 " Show git diff changes in the left gutter.
 Plug 'mhinz/vim-signify'
 
-" " visual-block, but the plugin works mostly from normal mode.
+" visual-block, but the plugin works mostly from normal mode.
 " Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-"
-" " auto complete path pair char ,etc []/()
-" Plug 'Raimondi/delimitMate'
-"
-" " use tab to complete word in insert mode
-" Plug 'ervandew/supertab'
-"
-" " ☆ auto check syntax error based LSP realtimely
-" Plug 'dense-analysis/ale'
-"
-" " fuzzy search like fzf, but no dependency ,only write by vimscript
-" " we can use this to search on some old sever without fzf/ag
-" Plug 'ctrlpvim/ctrlp.vim'
-"
-"
-"
-" Plug 'tpope/vim-surround'
-" Plug 'matze/vim-move'
-"
+
+" auto complete path pair char ,etc []/()
+Plug 'Raimondi/delimitMate'
+
+" fuzzy search like fzf, but no dependency ,only write by vimscript
+" we can use this to search on some old sever without fzf/ag
+Plug 'ctrlpvim/ctrlp.vim'
+
+Plug 'tpope/vim-surround'
+Plug 'matze/vim-move'
+
+" A bunch of useful language related snippets (ultisnips is the engine).
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+" ☆ auto check syntax error based LSP realtimely
+Plug 'dense-analysis/ale'
+
+"window zoom
+Plug 'szw/vim-maximizer'
+
 " "FUNNY VIM Draw ascii art
 " Plug 'vim-scripts/DrawIt'
 "
 " "Plug 'inkarkat/vim-mark'
-" Plug 'idbrii/vim-hiinterestingword'
 "
 "
 " Plug 'coderifous/textobj-word-column.vim'
 " Plug 'azabiong/vim-highlighter'
 "
-" Plug 'guns/xterm-color-table.vim'
-" Plug 'szw/vim-maximizer'
+Plug 'guns/xterm-color-table.vim'
+Plug 'idbrii/vim-hiinterestingword'
 
 call plug#end()
 
