@@ -59,7 +59,7 @@ noremap k gk
 noremap J 5gj
 noremap K 5gk
 noremap gj J
-noremap gk K " 'K' can call shell cmd,this have many funny use by 'keywordprg'
+noremap gk K "invoke extern command at cursor word
 noremap r <c-r>
 " noremap <c-r> r
 noremap <Down> gj
@@ -181,39 +181,10 @@ nnoremap <silent> <leader>hh :call clearmatches()<cr>
 " direct operate other win without switching
 nnoremap <M-n>    :call win_execute(win_getid(winnr('j')), "normal! 5j")<cr>
 nnoremap <leader>zz    :MaximizerToggle<cr>
+nmap <leader>/ <Plug>localsearch_toggle
 
 
-
-
-
-" keep cursor position after visual yank
-" vnoremap y ygv<Esc>
-
-" nnoremap <silent> <leader>h :so $VIMRUNTIME/syntax/hitest.vim<CR>
-
-" Move  select lines up or down
-" nnoremap <C-k> :m .-2<CR>==
-" nnoremap <C-j> :m .+1<CR>==
-" vnoremap <C-k> :m '<-2<CR>gv=gv
-" vnoremap <C-j> :m '>+1<CR>gv=gv
-" nnoremap <C-Up> :m .-2<CR>==
-" nnoremap <C-Down> :m .+1<CR>==
-" vnoremap <C-Up> :m '<-2<CR>gv=gv
-" vnoremap <C-Down> :m '>+1<CR>gv=gv
-
-" The same as above but instead of acting on the whole file it will be
-" restricted to the previously visually selected range. You can do that by
-" pressing *, visually selecting the range you want it to apply to and then
-" press a key below to replace all instances of it in the current selection.
-"
-" xnoremap <Leader>r :s///g<Left><Left>
-" xnoremap <Leader>rc :s///gc<Left><Left><Left>
-
-" Type a replacement term and press . to repeat the replacement again. Useful
-" for replacing a few instances of the term (comparable to multiple cursors).
-"
-" nnoremap <silent> <Leader>8 :let @/='\<'.expand('<cword>').'\>'<CR>cgn
-" xnoremap <silent> <Leader>8 "sy:let @/=@s<CR>cgn
+command  MYSeeHighlight :so $VIMRUNTIME/syntax/hitest.vim
 
 
 """""""""""""""""""""""""""""""""""""END""""""""""""""""""""""""""""""""""""""
@@ -455,7 +426,12 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'bling/vim-bufferline'
-" Plug 'edkolev/tmuxline.vim' " set tmux line as vim line
+Plug 'edkolev/promptline.vim'
+Plug 'edkolev/tmuxline.vim' " set tmux line as vim line
+Plug 'vim-ctrlspace/vim-ctrlspace'
+Plug 'mox-mox/vim-localsearch'
+Plug 'cdelledonne/vim-cmake'
+Plug 'lambdalisue/battery.vim'
 
 " change windows display
 Plug 'szw/vim-maximizer'
@@ -467,6 +443,10 @@ Plug 'mhinz/vim-startify'
 
 " Modify * to also work with visual selections.
 Plug 'nelstrom/vim-visual-star-search'
+
+Plug 'MattesGroeger/vim-bookmarks'
+Plug 'preservim/tagbar'
+Plug 'octol/vim-cpp-enhanced-highlight'
 
 " Toggle comments in various ways.
 Plug 'tpope/vim-commentary'
@@ -518,6 +498,7 @@ Plug 'Konfekt/FastFold'
 
 " A git wrapper.
 Plug 'tpope/vim-fugitive'
+Plug 'rbong/vim-flog'
 
 " Show git diff changes in the left gutter.
 Plug 'mhinz/vim-signify'
@@ -696,6 +677,9 @@ let g:airline_powerline_fonts = 1
 let g:airline_theme='bubblegum'
 
 let g:airline#extensions#tabline#enabled = 1
+let g:battery_watch_on_startup = 1
+let g:airline#extensions#battery#enabled = 1
+let g:loaded_battery = 1
 " let g:airline#extensions#tabline#left_sep = ' '
 " let g:airline#extensions#tabline#left_alt_sep = '|'
 " let g:airline_statusline_ontop=1
@@ -716,3 +700,10 @@ let g:qs_highlight_on_keys=['f', 'F', 't', 'T']
 " Only underline the highlights instead of using custom colors.
 highlight QuickScopePrimary gui=underline cterm=underline
 highlight QuickScopeSecondary gui=underline cterm=underline
+
+""""""""""""""""
+"  ale config  "
+""""""""""""""""
+hi aleerror cterm=none ctermfg=red ctermbg=darkgrey
+
+let g:ale_completion_enabled = 1
