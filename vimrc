@@ -24,7 +24,6 @@ execute 'redir >> ' . g:MyVimMesFile
 """""""""""""""""""""""""""""""""""""END""""""""""""""""""""""""""""""""""""""
 
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               basic key map                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -53,8 +52,6 @@ nnoremap <silent> g* g*zz
 nnoremap <silent> <c-o> <c-o>zz
 nnoremap <silent> <c-i> <c-i>zz
 " Seamlessly treat visual lines as actual lines when moving around.
-noremap 1 !
-noremap ! 1
 noremap 0 ^
 noremap ^ 0
 noremap j gj
@@ -120,6 +117,8 @@ nnoremap <Leader>l      :set list! \| set colorcolumn=80<cr>
 nnoremap <Leader>ll      :set list! \| set colorcolumn=<cr>
 nnoremap <leader>v      :set virtualedit=all<Cr>
 nnoremap <leader>vv     :set virtualedit=<Cr>
+nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '.
+            \string(getreg(v:register))<cr><c-f><left>
 
 " Toggle quickfix window.
 function! QuickFix_toggle()
@@ -278,13 +277,6 @@ let &t_SH = "\e[3 q"
 let &t_SI = "\e[0 q"
 let &t_EI = "\e[0 q"
 
-if (has("termguicolors"))
-  " https://github.com/vim/vim/issues/993#issuecomment-255651605
-  " let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  " let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-
-  " set termguicolors
-endif
 
 " force vim pair match by %, like if/else
 runtime! macros/matchit.vim
@@ -336,7 +328,7 @@ set wrapscan
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                  autocmd                                   "
+"                                  #autocmd                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 autocmd FileType c,cpp,java,xml setlocal list | set listchars=tab:>~,trail:.
@@ -378,12 +370,23 @@ autocmd FileType make setlocal noexpandtab
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                           custome color settings                           "
+"                           custome #color settings                           "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" set truecolor if term support RGB color set,this will cover all cterm set
+if (has("termguicolors"))
+  " https://github.com/vim/vim/issues/993#issuecomment-255651605
+  "
+  " let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  " let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+  " set termguicolors
+endif
+
 
 "
 " 设置颜色主题,适用于黑色背景.
-"colorscheme slate
+" colorscheme slate
 
 " ColorScheme  example
 "hi CursorLine   cterm=NONE ctermbg=grey ctermfg=green guibg=NONE guifg=NONE
@@ -431,59 +434,57 @@ if !filereadable(expand("~/.vim/autoload/plug.vim"))
     echom "Downloaded vim-plug successfully!"
 endif
 
-" set FocusGained and FocusLost term code t_ti t_te, old vim may need
-" Plug 'tmux-plugins/vim-tmux-focus-events'
-"
-" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-" Plug 'junegunn/fzf.vim'
-"
-" "file zoom
-" Plug 'junegunn/goyo.vim'
-" Plug 'junegunn/limelight.vim'
-" " Navigate and manipulate files in a tree view.
-" Plug 'lambdalisue/fern.vim'
-" Plug 'lambdalisue/fern-mapping-mark-children.vim'
 
 
-" " Handle multi-file find and replace.
-" " use grep/ag/etc to search file in quickfix
-" Plug 'mhinz/vim-grepper'
-" " A number of useful motions for the quickfix list, pasting and more.
-" Plug 'tpope/vim-unimpaired'
-" " A git wrapper.
-" Plug 'tpope/vim-fugitive'
-"
-" " Aligning text
-" Plug 'godlygeek/tabular'
-" " If you don't have nodejs and yarn  use pre build
-" Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() },
-"       \'for': ['markdown', 'vim-plug']}
-" " interactive window choose mode
-" Plug 't9md/vim-choosewin'
+
 """"""""""""""""""""
 "  #PLUGS INSTALL  "
 """"""""""""""""""""
 call plug#begin()
 
+" VIM 中文文档
+Plug 'yianwillis/vimcdoc'
+
+" copy to clipboard by osc52 without gui
+Plug 'zhangzz21/vim-oscyank', {'branch': 'main'}
+
+" vim theme
+Plug 'dracula/vim', { 'as': 'dracula' }
+
 " vim ui plugs
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'bling/vim-bufferline'
+" Plug 'edkolev/tmuxline.vim' " set tmux line as vim line
+
+" change windows display
+Plug 'szw/vim-maximizer'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 
 " customize vim initial interface
 Plug 'mhinz/vim-startify'
 
+" Modify * to also work with visual selections.
+Plug 'nelstrom/vim-visual-star-search'
+
 " Toggle comments in various ways.
 Plug 'tpope/vim-commentary'
 
-" VIM 中文文档
-Plug 'yianwillis/vimcdoc'
+" auto complete path pair char ,etc []/()
+Plug 'Raimondi/delimitMate'
 
-" use osc32 to copy to system clipboard without gui
-Plug 'zhangzz21/vim-oscyank', {'branch': 'main'}
+" use ds/cs/ys/vS add pair char like ()/"" around textobj
+Plug 'tpope/vim-surround'
+
+" use alt + j/k/h/l to move select block
+Plug 'matze/vim-move'
 
 " linux file command exec in vim : rm,mkdir,mv,find,sudo,wall,locate,cp,etc
 Plug 'tpope/vim-eunuch'
+
+" execute shell command, show result in quickfix
+Plug 'skywind3000/asyncrun.vim'
 
 " Better manage Vim sessions.
 Plug 'tpope/vim-obsession'
@@ -500,57 +501,78 @@ Plug 'ntpeters/vim-better-whitespace'
 " Automatically set tab by filetype
 Plug 'tpope/vim-sleuth'
 
-" Briefly highlight which text was yanked.
-Plug 'machakann/vim-highlightedyank'
-
 " Highlight which character to jump to when using horizontal movement keys.
 Plug 'unblevable/quick-scope'
-
-" Automatically show popup menu ,this may be annoy,default close it
-" Plug 'vim-scripts/AutoComplPop'
 
 " use tab to complete word in insert mode
 Plug 'ervandew/supertab'
 
-" Drastically improve insert mode performance in files with folds.
-Plug 'Konfekt/FastFold'
-
-" Show git diff changes in the left gutter.
-Plug 'mhinz/vim-signify'
-
-" visual-block, but the plugin works mostly from normal mode.
-" Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-
-" auto complete path pair char ,etc []/()
-Plug 'Raimondi/delimitMate'
-
-" fuzzy search like fzf, but no dependency ,only write by vimscript
-" we can use this to search on some old sever without fzf/ag
-Plug 'ctrlpvim/ctrlp.vim'
-
-Plug 'tpope/vim-surround'
-Plug 'matze/vim-move'
+" Automatically show popup menu ,this may be annoy,default close it
+Plug 'vim-scripts/AutoComplPop'
 
 " A bunch of useful language related snippets (ultisnips is the engine).
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
+" Drastically improve insert mode performance in files with folds.
+Plug 'Konfekt/FastFold'
+
+" A git wrapper.
+Plug 'tpope/vim-fugitive'
+
+" Show git diff changes in the left gutter.
+Plug 'mhinz/vim-signify'
+
 " ☆ auto check syntax error based LSP realtimely
 Plug 'dense-analysis/ale'
 
-"window zoom
-Plug 'szw/vim-maximizer'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
-" "FUNNY VIM Draw ascii art
-" Plug 'vim-scripts/DrawIt'
-"
-" "Plug 'inkarkat/vim-mark'
-"
-"
-" Plug 'coderifous/textobj-word-column.vim'
-" Plug 'azabiong/vim-highlighter'
-"
-Plug 'guns/xterm-color-table.vim'
+" fuzzy searh writed by vimscript
+Plug 'ctrlpvim/ctrlp.vim'
+
+" highlight text when yank
+Plug 'machakann/vim-highlightedyank'
+
+" <Leader>(1-6) to Highlight word ,<Leader>0 to clear
 Plug 'idbrii/vim-hiinterestingword'
+
+" show 265 xterm colors
+Plug 'guns/xterm-color-table.vim'
+
+
+" add vim textobj
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-syntax'
+Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java'] }
+Plug 'sgur/vim-textobj-parameter'
+Plug 'coderifous/textobj-word-column.vim'
+
+" Aligning text
+Plug 'godlygeek/tabular'
+
+" Navigate and manipulate files in a tree view.
+Plug 'lambdalisue/fern.vim'
+Plug 'lambdalisue/fern-mapping-mark-children.vim'
+
+" A number of useful motions for the quickfix list, pasting and more.
+Plug 'tpope/vim-unimpaired'
+
+"FUNNY VIM Draw ascii art
+Plug 'vim-scripts/DrawIt'
+
+" set FocusGained and FocusLost term code t_ti t_te, old vim may need
+" Plug 'tmux-plugins/vim-tmux-focus-events'
+
+" visual-block, but the plugin works mostly from normal mode.
+" Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
+" " use grep/ag/etc to search file in quickfix
+" Plug 'mhinz/vim-grepper'
+
+" " interactive window choose mode
+" Plug 't9md/vim-choosewin'
 
 call plug#end()
 
