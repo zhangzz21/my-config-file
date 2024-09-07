@@ -581,8 +581,10 @@ call plug#end()
 """"""""""""""""""""
 let g:mkdp_markdown_css = expand("~/github-markdown.css")
 
-"=========================PLUGINS CONFIG============================"
-"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                plug #config                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 "vim-oscyank config
 nmap <leader>y <Plug>OSCYankOperator
 nmap <leader>yy <leader>y_
@@ -592,21 +594,6 @@ vmap <leader>y <Plug>OSCYankVisual
 let g:fzf_vim = {}
 let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
 let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
-
-" Customize fzf colors to match your color scheme.
-" let g:fzf_colors =
-" \ { 'fg':      ['fg', 'Normal'],
-"   \ 'bg':      ['bg', 'Normal'],
-"   \ 'hl':      ['fg', 'Comment'],
-"   \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-"   \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-"   \ 'hl+':     ['fg', 'Statement'],
-"   \ 'info':    ['fg', 'PreProc'],
-"   \ 'prompt':  ['fg', 'Conditional'],
-"   \ 'pointer': ['fg', 'Exception'],
-"   \ 'marker':  ['fg', 'Keyword'],
-"   \ 'spinner': ['fg', 'Label'],
-"   \ 'header':  ['fg', 'Comment'] }
 
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
@@ -662,30 +649,6 @@ endfunction
 noremap <silent> <Leader>f :Fern . -drawer -reveal=% -toggle -width=35<CR>
 
 
-" .............................................................................
-" mhinz/vim-grepper
-" .............................................................................
-
-let g:grepper={}
-let g:grepper.tools=["rg"]
-
-xmap gr <plug>(GrepperOperator)
-
-" " After searching for text, press this mapping to do a project wide find and
-" " replace. It's similar to <leader>r except this one applies to all matches
-" " across all files instead of just the current file.
-" nnoremap <Leader>R
-"   \ :let @s='\<'.expand('<cword>').'\>'<CR>
-"   \ :Grepper -cword -noprompt<CR>
-"   \ :cfdo %s/<C-r>s//g \| update
-"   \<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
-
-" " The same as above except it works with a visual selection.
-" xmap <Leader>R
-"     \ "sy
-"     \ gvgr
-"     \ :cfdo %s/<C-r>s//g \| update
-"      \<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
 " .............................................................................
 " ntpeters/vim-better-whitespace
@@ -701,14 +664,14 @@ let g:better_whitespace_filetypes_blacklist=[]
 " .............................................................................
 " SirVer/ultisnips
 " .............................................................................
-
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 
+"""""""""""""""""
+"  goyo config  "
+"""""""""""""""""
 
-"goyo config : zoom file like tmux zoom
-"goyo will effect colorscheme when exit,so source config
 autocmd! User GoyoLeave source ~/.vimrc
 nnoremap <Leader>g :Goyo 100<CR>
 nnoremap <Leader>z :Goyo 100%x100%<CR>
@@ -718,22 +681,8 @@ nnoremap <Leader>z :Goyo 100%x100%<CR>
 """""""""""""""""""""""
 " Color name (:help cterm-colors) or ANSI code
 let g:limelight_conceal_ctermfg = 'gray'
-
-
-" Default: 0.5
-let g:limelight_default_coefficient = 1
-
-" Number of preceding/following paragraphs to include (default: 0)
-let g:limelight_paragraph_span = 1
-
-" Beginning/end of paragraph
-"   When there's no empty line between the paragraphs
-"   and each paragraph starts with indentation
-" let g:limelight_bop = '^\s'
-" let g:limelight_eop = '\ze\n^\s'
-
-" Highlighting priority (default: 10)
-"   Set it to -1 not to overrule hlsearch
+let g:limelight_default_coefficient = 0.5
+let g:limelight_paragraph_span = 0
 let g:limelight_priority = -1
 
 
@@ -744,7 +693,6 @@ let g:limelight_priority = -1
 "  AIRLINE CONFIG  "
 """"""""""""""""""""
 let g:airline_powerline_fonts = 1
-" let g:airline_statusline_ontop=1
 let g:airline_theme='bubblegum'
 
 let g:airline#extensions#tabline#enabled = 1
@@ -754,27 +702,13 @@ let g:airline#extensions#tabline#enabled = 1
 " let g:airline_highlighting_cache = 1
 
 
-" Customize airline show text sample
-" function! AccentDemo()
-"   let keys = ['a','b','c','d','e','f','g','h']
-"   for k in keys
-"     call airline#parts#define_text(k, k)
-"   endfor
-"   call airline#parts#define_accent('a', 'red')
-"   call airline#parts#define_accent('b', 'green')
-"   call airline#parts#define_accent('c', 'blue')
-"   call airline#parts#define_accent('d', 'yellow')
-"   call airline#parts#define_accent('e', 'orange')
-"   call airline#parts#define_accent('f', 'purple')
-"   call airline#parts#define_accent('g', 'bold')
-"   call airline#parts#define_accent('h', 'italic')
-"   let g:airline_section_a = airline#section#create(keys)
-" endfunction
-"
 " Display value of the char under the cursor, in hex
 autocmd VimEnter * let g:airline_section_a = g:airline_section_a . '[%B]'
 autocmd VimEnter * AirlineRefresh
 
+""""""""""""""""""""""""
+"  quick scope config  "
+""""""""""""""""""""""""
 
 " Trigger a highlight in the appropriate direction when pressing these keys.
 let g:qs_highlight_on_keys=['f', 'F', 't', 'T']
@@ -782,78 +716,3 @@ let g:qs_highlight_on_keys=['f', 'F', 't', 'T']
 " Only underline the highlights instead of using custom colors.
 highlight QuickScopePrimary gui=underline cterm=underline
 highlight QuickScopeSecondary gui=underline cterm=underline
-
-" some recommended plugins for c/c++: gtags,cscopetag
-"" vim 用 map 命令来映射快捷键,它前面可以加一些前缀来对应
-"" 不同的场景.下面 map 前面的 nore 表示非递归. nore 前面
-"" 的n表示只在普通模式下生效.即,基于下面的配置,在插入模式下,
-"" 按F6没有这个映射效果.插入模式对应i. 下面配置cscope查找
-"" 文件命令的快捷键为F6,由于需要手动输入文件名,不要加<CR>
-"nnoremap <F6> :cs find f<Space>
-"
-"" 配置 gtags 插件,用于在函数之间跳转,方便查看源代码.
-"" 参考 gtags-cscopde.vim 的注释,添加下面语句来
-"" 使用 ':tag' 和 '<C-]>'
-"set cscopetag
-"" 设置 cscopetag 后,由于gtags-cscopde默认没有启动,
-"ojroques" 还需要进行下面的设置.结合这两个设置, gtags 就可以
-"" 使用Ctrl-]键来跳转到函数定义处.
-"let GtagsCscope_Auto_Load = 1
-"" 配置 GtagsCscope_Auto_Load = 1 后,在没有GTAGS文件
-"" 的目录下使用vim,会提示 Gtags-cscope: GTAGS not found.
-"" Press ENTER or type command to continue
-"" 需要按回车才会打开文件.如果要去掉这个报错,需要设置GtagsCscope_Quiet = 1
-"let g:GtagsCscope_Quiet = 1
-"" 设置只有一个匹配结果时,不显示quickfix窗口
-"let g:Gtags_Close_When_Single = 1
-"
-" Set cursor style
-" Reference chart of values:
-"   Ps = 0  -> blinking block.
-"   Ps = 1  -> blinking block (default).
-"   Ps = 2  -> steady block.
-"   Ps = 3  -> blinking underline.
-"   Ps = 4  -> steady underline.
-"   Ps = 5  -> blinking bar (xterm).
-"   Ps = 6  -> steady bar (xterm).
-" let &t_SI = "\e[6 q"
-" let &t_EI = "\e[2 q"
-" 设置状态行显示的内容. %F: 显示当前文件的完整路径.
-" %r: 如果readonly,会显示[RO]
-" %B: 显示光标下字符的编码值,十六进制.
-" %l:光标所在的行号. %v:光标所在的虚拟列号.
-" %P: 显示当前内容在整个文件中的百分比.
-" %H和%M是strftime()函数的参数,获取时间.
-" set statusline+=%F%r%y%m\ [HEX=%B][%l,%v,%P]\ %{strftime(\"%H:%M\")}
-
-
-"function! s:statusline_expr()
-"  let mod = "%{&modified ? '[+] ' : !&modifiable ? '[x] ' : ''}"
-"  let ro  = "%{&readonly ? '[RO] ' : ''}"
-"  let ft  = "%{len(&filetype) ? '['.&filetype.'] ' : ''}"
-"  let fug = "%{exists('g:loaded_fugitive') ? fugitive#statusline() : ''}"
-"  let sep = ' %= '
-"  let pos = ' %-12(%l : %c%V%) '
-"  let pct = ' %P'
-"
-"  return '[%n] %f %<'.mod.ro.ft.fug.sep.pos.'%*'.pct
-"endfunction
-"
-"let &statusline = s:statusline_expr()
-"********* auto highlight the last insert context ******
-"autocmd InsertEnter *   let b:CursorLineBeforeIns = line(".") |
-"            \  let b:CursorColBeforeIns = col(".")
-"
-"autocmd InsertLeave *   let b:CursorLineAfterIns = line(".")  |
-"            \  let b:CursorColAfterIns = col(".")
-"
-" autocmd InsertLeave * echom "INSERT: '" . @. . "'" |
-"             \ execute '2match MyInsertContent ' . '/\%' . b:CursorLineBeforeIns . 'l\%' . b:CursorColBeforeIns .
-"             \ 'c\(.\|\n\)*\%' . b:CursorLineAfterIns . 'l\%' . b:CursorColAfterIns .'c./'
-
-
-
-
-" autocmd BufEnter * silent!  2match none |
-"             \ silent! execute '2match MyInsertContent ' . '/\%' . b:CursorLineBeforeIns . 'l\%' . b:CursorColBeforeIns .
-"             \ 'c\(.\|\n\)*\%' . b:CursorLineAfterIns . 'l\%' . b:CursorColAfterIns .'c./'
